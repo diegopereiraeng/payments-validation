@@ -1,0 +1,7 @@
+template: Hello, %s!
+defaultName: Stranger
+
+logging:
+  level: INFO
+  loggers:
+    io.harness.payments: DEBUG
