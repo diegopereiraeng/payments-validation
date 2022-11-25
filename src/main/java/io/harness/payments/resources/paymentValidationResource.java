@@ -36,7 +36,6 @@ public class paymentValidationResource {
     public Representation<Payment> validate(@NotNull @Valid final Payment invoice) {
         Payment validatedPayment = paymentValidation.validate(invoice);
 
-
         if (validatedPayment.getStatus() != "verified" ){
             return new Representation<Payment>(HttpStatus.INTERNAL_SERVER_ERROR_500, validatedPayment);
         }
