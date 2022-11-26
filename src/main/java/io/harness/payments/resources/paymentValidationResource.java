@@ -26,7 +26,7 @@ public class paymentValidationResource {
 
     @GET
     @Timed
-    public List sayHello(@QueryParam("id") Optional<String> id) {
+    public List listValidations(@QueryParam("id") Optional<String> id) {
 
         return paymentValidation.getPayments();
     }
