@@ -55,7 +55,6 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
     }
 
 
-
 //    private void registerMetrics(Environment environment) {
 //        CollectorRegistry collectorRegistry = new CollectorRegistry();
 //        collectorRegistry.register(new DropwizardExports(environment.metrics()));
