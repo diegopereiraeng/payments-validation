@@ -51,6 +51,7 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
 //        registerMetrics(environment);
         FilterRegistration.Dynamic micrometerFilter = environment.servlets().addFilter("MicrometerHttpFilter", new MicrometerHttpFilter());
         micrometerFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+
     }
 
 //    private void registerMetrics(Environment environment) {
