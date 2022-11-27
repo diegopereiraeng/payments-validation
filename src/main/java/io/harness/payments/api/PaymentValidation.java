@@ -14,7 +14,7 @@ public abstract class PaymentValidation {
             this.payments = payments.subList(100,payments.size()-1);
         }
         try {
-            Thread.sleep(3100);
+            Thread.sleep(3000);
             invoice.setStatus("verified");
             payments.add(invoice);
             return invoice;
