@@ -24,12 +24,14 @@ public abstract class PaymentValidation {
             this.payments = payments.subList(100,payments.size()-1);
         }
         try {
+            log.info("delaying for "+msDelay+" seconds");
             Thread.sleep(msDelay);
 
             if (r.nextInt((100 - 1) + 1) < 3) {
 
                 log.error("ERROR [Payment Validation] - Failed to validate invoice");
                 invoice.setStatus("failed-bug");
+                return invoice;
             }
 
             invoice.setStatus("verified");
