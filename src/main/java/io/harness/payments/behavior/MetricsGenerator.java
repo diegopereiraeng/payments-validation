@@ -72,7 +72,7 @@ public class MetricsGenerator implements Runnable {
             /**
              * Define you target on which you would like to evaluate the featureFlag
              */
-            int calls_per_minute = 20;
+            int calls_per_minute = 40;
 
             for (int i = 0; i < calls_per_minute; i++) {
 
