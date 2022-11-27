@@ -5,6 +5,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.harness.payments.api.Payment;
 import io.harness.payments.api.PaymentValidation;
+import io.harness.payments.behavior.BehaviorGenerator;
 import io.harness.payments.health.TemplateHealthCheck;
 import io.harness.payments.resources.paymentValidationResource;
 import io.harness.payments.resources.scanPayResource;
@@ -20,6 +21,10 @@ import javax.servlet.DispatcherType;
 import java.util.EnumSet;
 
 public class scanPayApplication extends Application<scanPayConfiguration> {
+
+
+    public static final BehaviorGenerator behaviorGenerator =
+            new BehaviorGenerator();
 
     public static void main(final String[] args) throws Exception {
         new scanPayApplication().run(args);
@@ -51,6 +56,9 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
 //        registerMetrics(environment);
         FilterRegistration.Dynamic micrometerFilter = environment.servlets().addFilter("MicrometerHttpFilter", new MicrometerHttpFilter());
         micrometerFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+
+
+        behaviorGenerator.init();
 
     }
 
