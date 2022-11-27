@@ -18,7 +18,7 @@ public abstract class PaymentValidation {
     public Payment validate(Payment invoice){
         int max = 1000, min = 900;
 
-
+        log.info("starting payment validation");
 
         if (payments.size() >= 1000){
             this.payments = payments.subList(100,payments.size()-1);
