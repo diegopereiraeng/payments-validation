@@ -14,7 +14,6 @@ public abstract class PaymentValidation {
         }
         try {
             Thread.sleep(1000);
-
             invoice.setStatus("verified");
             payments.add(invoice);
             return invoice;
