@@ -16,14 +16,16 @@ public abstract class PaymentValidation {
     private SecureRandom r = new SecureRandom();
 
     public Payment validate(Payment invoice){
-        int max = 900, min = 1000;
+        int max = 1000, min = 900;
 
-        int msDelay = r.nextInt((max - min) + 1) + min;
+
 
         if (payments.size() >= 1000){
             this.payments = payments.subList(100,payments.size()-1);
         }
         try {
+
+            int msDelay = r.nextInt((max - min) + 1) + min;
             log.info("delaying for "+msDelay+" seconds");
             Thread.sleep(msDelay);
 
