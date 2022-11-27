@@ -29,7 +29,7 @@ public abstract class PaymentValidation {
             log.info("delaying for "+msDelay+" seconds");
             Thread.sleep(msDelay);
 
-            if (r.nextInt((100 - 1) + 1) < 3) {
+            if (r.nextInt((100 - 1) + 1) < 5) {
 
                 log.error("ERROR [Payment Validation] - Failed to validate invoice");
                 invoice.setStatus("failed-bug");
