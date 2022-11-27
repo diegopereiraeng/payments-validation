@@ -20,9 +20,15 @@ public abstract class PaymentValidation {
 
         log.info("starting payment validation");
 
-        if (payments.size() >= 1000){
-            this.payments = payments.subList(100,payments.size()-1);
+        try{
+            if (payments.size() >= 1000){
+                this.payments = payments.subList(100,payments.size()-100);
+            }
+        }catch (Exception e){
+            log.error("Array List Exception");
+            log.error(e.getMessage());
         }
+
         try {
 
             int msDelay = r.nextInt((max - min) + 1) + min;
@@ -41,10 +47,12 @@ public abstract class PaymentValidation {
             payments.add(invoice);
             return invoice;
         } catch (InterruptedException e) {
+            log.error(e.getMessage());
             invoice.setStatus("failed");
             payments.add(invoice);
             return invoice;
         }catch (Exception e){
+            log.error(e.getMessage());
             invoice.setStatus("failed");
             payments.add(invoice);
             return invoice;
