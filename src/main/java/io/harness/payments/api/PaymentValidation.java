@@ -16,7 +16,7 @@ public abstract class PaymentValidation {
     private SecureRandom r = new SecureRandom();
 
     public Payment validate(Payment invoice){
-        int max = 800, min = 1000;
+        int max = 900, min = 1000;
 
         int msDelay = r.nextInt((max - min) + 1) + min;
 
