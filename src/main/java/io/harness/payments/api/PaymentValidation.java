@@ -8,6 +8,7 @@ import java.util.*;
 public abstract class PaymentValidation {
     List payments =  new ArrayList();
 
+
     public Payment validate(Payment invoice){
         if (payments.size() >= 1000){
             this.payments = payments.subList(100,payments.size()-1);
