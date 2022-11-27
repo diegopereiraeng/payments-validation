@@ -28,8 +28,9 @@ public abstract class PaymentValidation {
             int msDelay = r.nextInt((max - min) + 1) + min;
             log.info("delaying for "+msDelay+" seconds");
             Thread.sleep(msDelay);
-
-            if (r.nextInt((100 - 1) + 1) < 5) {
+            int newNumber = r.nextInt((100 - 1) + 1) ;
+            log.info("Lucky Number = "+ newNumber);
+            if (newNumber < 5) {
 
                 log.error("ERROR [Payment Validation] - Failed to validate invoice");
                 invoice.setStatus("failed-bug");
