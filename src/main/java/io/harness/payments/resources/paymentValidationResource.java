@@ -39,10 +39,10 @@ public class paymentValidationResource {
         Payment validatedPayment = paymentValidation.validate(invoice);
 
         if (validatedPayment.getStatus() != "verified" ){
-            log.error("payment not validated");
+            log.debug("payment not validated");
             return new Representation<Payment>(HttpStatus.INTERNAL_SERVER_ERROR_500, validatedPayment);
         }
-        log.info("payment validated");
+        log.debug("payment validated");
         return new Representation<Payment>(HttpStatus.OK_200, validatedPayment);
     }
 }
