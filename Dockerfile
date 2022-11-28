@@ -53,7 +53,6 @@ RUN wget -O AppServerAgent.zip "$(curl 'https://download.appdynamics.com/downloa
 #RUN wget -qO- https://get.et.harness.io/releases/latest/nix/harness-et-agent.tar.gz | tar -xz
 #COPY newrelic-java-5.3.0.tar.gz /opt/scanPay/
 
-
 WORKDIR /opt/scanPay
 
 CMD bash -c ' \
