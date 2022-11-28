@@ -83,10 +83,10 @@ public class MetricsGenerator implements Runnable {
                     createFuture().get();
 
                 }catch (Exception e){
-                    log.error("Payments Generator Error");
+                    log.error("ERROR [Metric Generator] - "+e.getMessage());
                 }
 
-                Thread.sleep(55000 / calls_per_minute);
+                Thread.sleep(40000 / calls_per_minute);
             }
         } catch (InterruptedException ex) {
             log.error(ex.getMessage());
