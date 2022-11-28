@@ -47,12 +47,16 @@ public abstract class PaymentValidation {
             payments.add(invoice);
             return invoice;
         } catch (InterruptedException e) {
-            log.error(e.getMessage());
+            log.error("ERROR [Payment Validation] - Interruption Exception: "+e.getMessage());
             invoice.setStatus("failed");
             payments.add(invoice);
             return invoice;
         }catch (Exception e){
-            log.error(e.getMessage());
+            String errorMsg = e.getMessage();
+            if (errorMsg == null){
+                errorMsg = e.toString();
+            }
+            log.error("ERROR [Payment Validation] - Exception: "+errorMsg);
             invoice.setStatus("failed");
             payments.add(invoice);
             return invoice;
