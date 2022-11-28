@@ -48,7 +48,7 @@ public class MetricsGenerator implements Runnable {
 
 
             }catch (Exception e){
-                log.error("Metrics Generator Error (Validation APIs)");
+                //log.error("Metrics Generator Error (Validation APIs)");
             }
             log.debug("Finished Async Validation Task - "+Thread.currentThread().getName());
 
@@ -68,8 +68,6 @@ public class MetricsGenerator implements Runnable {
              * Put the API Key here from your environment
              */
 
-
-
             /**
              * Define you target on which you would like to evaluate the featureFlag
              */
@@ -78,9 +76,11 @@ public class MetricsGenerator implements Runnable {
             for (int i = 0; i < calls_per_minute; i++) {
                 //long startTime = System.nanoTime();
                 try {
-
                     createFuture().get();
-
+                    Thread.sleep(40000 / calls_per_minute);
+                }catch (InterruptedException ex) {
+                    log.error(ex.getMessage());
+                    Thread.currentThread().interrupt();
                 }catch (Exception e){
                     log.error("ERROR [Metric Generator] - "+e.getMessage());
                 }
@@ -88,11 +88,8 @@ public class MetricsGenerator implements Runnable {
                 //long endTime = System.nanoTime();
 
                 //long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
-                Thread.sleep(50000 / calls_per_minute);
+
             }
-        } catch (InterruptedException ex) {
-            log.error(ex.getMessage());
-            Thread.currentThread().interrupt();
         } catch (Exception e) {
             log.error("Fail in generating Metric Behavior");
             log.error(e.getMessage());

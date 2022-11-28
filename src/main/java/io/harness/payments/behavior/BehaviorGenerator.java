@@ -41,9 +41,14 @@ public class BehaviorGenerator {
 
     public void startAll()  {
         log.debug("[Metric Automatic Behavior] Starting");
-        running.add(executorService.scheduleAtFixedRate(
-                new MetricsGenerator( ), 0, 1,
-                TimeUnit.MINUTES));
+        try {
+            running.add(executorService.scheduleAtFixedRate(
+                    new MetricsGenerator( ), 0, 1,
+                    TimeUnit.MINUTES));
+        }catch (Exception e){
+            log.error("Metric Generator Error - Unknown");
+        }
+
         log.debug("[Metric Automatic Behavior] Started");
     }
 
