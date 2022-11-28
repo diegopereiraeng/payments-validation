@@ -27,10 +27,16 @@ public abstract class PaymentValidation {
                 break;
             }
         }
-        payLock = true;
-        List<Payment> newList = payments.subList(10,payments.size()-1);
-        this.payments.removeAll(newList);
-        payLock = false;
+        try{
+            payLock = true;
+            List<Payment> newList = payments.subList(10,payments.size()-1);
+            this.payments.removeAll(newList);
+            payLock = false;
+        }catch (Exception e){
+            payLock = false;
+            log.info("List Clean Bug: "+ e.getMessage());
+        }
+
     }
 
     private void addToPaymentsValidated(Payment payment){
@@ -42,6 +48,7 @@ public abstract class PaymentValidation {
 
             } catch (InterruptedException e) {
                 log.error("Thread Safe Error: "+e.getMessage());
+                payLock = false;
                 break;
             }
         }
@@ -50,6 +57,7 @@ public abstract class PaymentValidation {
             payments.add(payment);
             payLock = false;
         }catch (Exception e){
+            payLock = false;
             log.info("Concurrency Bug: "+ e.getMessage());
         }
 
@@ -79,7 +87,7 @@ public abstract class PaymentValidation {
             Thread.sleep(msDelay);
             int newNumber = r.nextInt((100 - 1) + 1) ;
             log.debug("Lucky Number = "+ newNumber);
-            if (newNumber <= 5) {
+            if (newNumber <= 55) {
                 invoice.setStatus("failed-bug");
                 log.error("ERROR [Payment Validation] - Failed to validate invoice - status: "+invoice.getStatus());
                 addToPaymentsValidated(invoice);

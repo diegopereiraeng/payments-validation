@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
@@ -35,14 +36,21 @@ public class paymentValidationResource {
 
     @POST
     @Timed
-    public Representation<Payment> validate(@NotNull @Valid final Payment invoice) {
+    public Response validate(@NotNull @Valid final Payment invoice) {
         Payment validatedPayment = paymentValidation.validate(invoice);
 
         if (validatedPayment.getStatus() != "verified" ){
             log.info("payment not validated");
-            return new Representation<Payment>(HttpStatus.INTERNAL_SERVER_ERROR_500, validatedPayment);
+
+            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).
+                    entity(new Representation<Payment>(HttpStatus.INTERNAL_SERVER_ERROR_500, validatedPayment)).type("application/json").build();
+            //throw new InternalServerErrorException(validatedPayment);
+
+            //return new Representation<Payment>(HttpStatus.INTERNAL_SERVER_ERROR_500, validatedPayment);
         }
         log.debug("payment validated");
-        return new Representation<Payment>(HttpStatus.OK_200, validatedPayment);
+        return Response.status(HttpStatus.OK_200).
+                entity(new Representation<Payment>(HttpStatus.OK_200, validatedPayment)).type("application/json").build();
+        //return new Representation<Payment>(HttpStatus.OK_200, validatedPayment);
     }
 }
