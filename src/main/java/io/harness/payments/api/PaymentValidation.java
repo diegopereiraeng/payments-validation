@@ -39,14 +39,20 @@ public abstract class PaymentValidation {
             log.debug("Waiting for Thread Unlock");
             try {
                 Thread.sleep(100);
+
             } catch (InterruptedException e) {
                 log.error("Thread Safe Error: "+e.getMessage());
                 break;
             }
         }
-        payLock = true;
-        payments.add(payment);
-        payLock = false;
+        try{
+            payLock = true;
+            payments.add(payment);
+            payLock = false;
+        }catch (Exception e){
+            log.info("Concurrency Bug: "+ e.getMessage());
+        }
+
     };
 
 
