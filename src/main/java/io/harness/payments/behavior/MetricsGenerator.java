@@ -77,7 +77,7 @@ public class MetricsGenerator implements Runnable {
             int calls_per_minute = 40;
 
             for (int i = 0; i < calls_per_minute; i++) {
-
+                //long startTime = System.nanoTime();
                 try {
 
                     createFuture().get();
@@ -86,7 +86,10 @@ public class MetricsGenerator implements Runnable {
                     log.error("ERROR [Metric Generator] - "+e.getMessage());
                 }
 
-                Thread.sleep(40000 / calls_per_minute);
+                //long endTime = System.nanoTime();
+
+                //long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
+                Thread.sleep(50000 / calls_per_minute);
             }
         } catch (InterruptedException ex) {
             log.error(ex.getMessage());

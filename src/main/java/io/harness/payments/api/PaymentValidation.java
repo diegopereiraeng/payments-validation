@@ -21,8 +21,10 @@ public abstract class PaymentValidation {
         log.debug("starting payment validation");
 
         try{
-            if (payments.size() >= 1000){
-                this.payments = payments.subList(100,payments.size()-100);
+            if (payments.size() >= 100){
+                List newList = payments.subList(10,payments.size()-10);
+                this.payments.removeAll(payments);
+                this.payments = newList;
             }
         }catch (Exception e){
             log.error("Array List Exception");
@@ -44,6 +46,7 @@ public abstract class PaymentValidation {
             }
 
             invoice.setStatus("verified");
+
             payments.add(invoice);
             return invoice;
         } catch (InterruptedException e) {
