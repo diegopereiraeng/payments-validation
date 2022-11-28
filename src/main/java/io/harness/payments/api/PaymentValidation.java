@@ -45,7 +45,6 @@ public abstract class PaymentValidation {
             }
         }
         payLock = true;
-        log.info("adding to list");
         payments.add(payment);
         payLock = false;
     };
@@ -63,7 +62,7 @@ public abstract class PaymentValidation {
                 log.debug("List Cleaner Finished");
             }
         }catch (Exception e){
-            log.error("Array List Exception");
+            log.error("ERROR [Payment Validation] - Array List Exception");
             log.error(e.getMessage());
         }
 
@@ -74,7 +73,7 @@ public abstract class PaymentValidation {
             Thread.sleep(msDelay);
             int newNumber = r.nextInt((100 - 1) + 1) ;
             log.debug("Lucky Number = "+ newNumber);
-            if (newNumber < 5) {
+            if (newNumber <= 10) {
 
                 log.error("ERROR [Payment Validation] - Failed to validate invoice");
                 invoice.setStatus("failed-bug");
