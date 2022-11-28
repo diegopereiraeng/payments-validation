@@ -55,6 +55,7 @@ RUN wget -O AppServerAgent.zip "$(curl 'https://download.appdynamics.com/downloa
 
 WORKDIR /opt/scanPay
 
+
 CMD bash -c ' \
     if [[ "$ENABLE_APPDYNAMICS" == "true" ]]; then \
       node_name="-Dappdynamics.agent.nodeName=$(hostname)"; \
