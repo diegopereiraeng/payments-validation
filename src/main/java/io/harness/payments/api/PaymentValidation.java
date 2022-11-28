@@ -18,7 +18,7 @@ public abstract class PaymentValidation {
     public Payment validate(Payment invoice){
         int max = 1000, min = 900;
 
-        log.info("starting payment validation");
+        log.debug("starting payment validation");
 
         try{
             if (payments.size() >= 1000){
@@ -32,10 +32,10 @@ public abstract class PaymentValidation {
         try {
 
             int msDelay = r.nextInt((max - min) + 1) + min;
-            log.info("delaying for "+msDelay+" seconds");
+            log.debug("delaying for "+msDelay+" seconds");
             Thread.sleep(msDelay);
             int newNumber = r.nextInt((100 - 1) + 1) ;
-            log.info("Lucky Number = "+ newNumber);
+            log.debug("Lucky Number = "+ newNumber);
             if (newNumber < 5) {
 
                 log.error("ERROR [Payment Validation] - Failed to validate invoice");

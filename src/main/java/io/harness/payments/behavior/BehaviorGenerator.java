@@ -29,20 +29,28 @@ public class BehaviorGenerator {
 
 
     public void init()  {
+        log.debug("[Metric Automatic Behavior] Init");
         executorService = new ScheduledThreadPoolExecutor(100);
         running = new ArrayList<>();
-        String ffKey = System.getenv("FF_KEY");
+
+        startAll();
+
+        //String ffKey = System.getenv("FF_KEY");
 
     }
 
     public void startAll()  {
-        log.info("[Metric Automatic Behavior] Starting");
+        log.debug("[Metric Automatic Behavior] Starting");
         running.add(executorService.scheduleAtFixedRate(
                 new MetricsGenerator( ), 0, 1,
                 TimeUnit.MINUTES));
-        log.info("[Metric Automatic Behavior] Started");
+        log.debug("[Metric Automatic Behavior] Started");
     }
 
+    public void stopAll() {
+        running.forEach(future -> future.cancel(true));
+        running.clear();
+    }
 
 
 

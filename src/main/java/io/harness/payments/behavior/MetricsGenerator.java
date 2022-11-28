@@ -27,7 +27,7 @@ public class MetricsGenerator implements Runnable {
     private CompletableFuture<Void> createFuture(){
         Runnable runnable = () -> {
 
-            log.info("Staring Async Validation Task - "+Thread.currentThread().getName());
+            log.debug("Staring Async Validation Task - "+Thread.currentThread().getName());
 
             try{
                 // Banking Calls
@@ -45,13 +45,13 @@ public class MetricsGenerator implements Runnable {
 
                 String result2 = client.target("http://localhost:8080"+"/validation").request().post( Entity.json( jsonString ),String.class);
 
-                log.info("validation completed: "+result);
+                log.debug("validation completed: "+result);
 
 
             }catch (Exception e){
                 log.error("Metrics Generator Error (Validation APIs)");
             }
-            log.info("Finished Async Validation Task - "+Thread.currentThread().getName());
+            log.debug("Finished Async Validation Task - "+Thread.currentThread().getName());
 
         };
         return CompletableFuture.runAsync(runnable);
@@ -60,6 +60,8 @@ public class MetricsGenerator implements Runnable {
     @SneakyThrows
     @Override
     public void run() {
+
+        log.info("Staring Async Validation Task Thread");
 
         try{
 
