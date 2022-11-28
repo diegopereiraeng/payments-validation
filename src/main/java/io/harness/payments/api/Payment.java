@@ -29,6 +29,6 @@ public class Payment {
     @JsonProperty
     public String setStatus(String status) {
         this.status = status;
-        return status;
+        return this.status;
     }
 }

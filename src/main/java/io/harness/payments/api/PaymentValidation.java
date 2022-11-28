@@ -73,10 +73,9 @@ public abstract class PaymentValidation {
             Thread.sleep(msDelay);
             int newNumber = r.nextInt((100 - 1) + 1) ;
             log.debug("Lucky Number = "+ newNumber);
-            if (newNumber <= 10) {
-
-                log.error("ERROR [Payment Validation] - Failed to validate invoice");
+            if (newNumber <= 5) {
                 invoice.setStatus("failed-bug");
+                log.error("ERROR [Payment Validation] - Failed to validate invoice - status: "+invoice.getStatus());
                 addToPaymentsValidated(invoice);
                 return invoice;
             }
