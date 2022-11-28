@@ -65,7 +65,7 @@ public abstract class PaymentValidation {
 
 
     public Payment validate(Payment invoice){
-        int max = 4000, min = 3900;
+        int max = 4000, min = 3000;
 
         log.debug("starting payment validation");
 
