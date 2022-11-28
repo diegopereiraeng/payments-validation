@@ -9,6 +9,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import java.net.InetAddress;
+import java.security.SecureRandom;
 import java.util.concurrent.CompletableFuture;
 
 import javax.ws.rs.core.MediaType;
@@ -17,6 +18,7 @@ import javax.ws.rs.client.Entity;
 @Slf4j
 public class MetricsGenerator implements Runnable {
 
+    private SecureRandom r = new SecureRandom();
 
     Client client = ClientBuilder.newClient();
     public MetricsGenerator() {
@@ -34,17 +36,19 @@ public class MetricsGenerator implements Runnable {
                 String result = client.target("http://localhost:8080"+"/validation").request().get(String.class);
 
 
-                // Validation Body
+                if (r.nextInt(2) <= 0) {
+                    // Validation Body
 
-                String jsonString = new JSONObject()
-                        .put("id", 7)
-                        .put("status", "not verified")
-                        //.put("JSON3", new JSONObject().put("key1", "value1"))
-                        .toString();
+                    String jsonString = new JSONObject()
+                            .put("id", 7)
+                            .put("status", "not verified")
+                            //.put("JSON3", new JSONObject().put("key1", "value1"))
+                            .toString();
 
-                String result2 = client.target("http://localhost:8080"+"/validation").request().post( Entity.json( jsonString ),String.class);
+                    String result2 = client.target("http://localhost:8080" + "/validation").request().post(Entity.json(jsonString), String.class);
 
-                log.debug("validation completed: "+result);
+                    log.debug("validation completed: " + result);
+                }
 
 
             }catch (Exception e){
@@ -71,7 +75,7 @@ public class MetricsGenerator implements Runnable {
             /**
              * Define you target on which you would like to evaluate the featureFlag
              */
-            int calls_per_minute = 40;
+            int calls_per_minute = 60;
 
             for (int i = 0; i < calls_per_minute; i++) {
                 //long startTime = System.nanoTime();
