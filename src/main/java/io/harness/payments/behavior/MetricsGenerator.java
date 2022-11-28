@@ -11,7 +11,6 @@ import javax.ws.rs.client.WebTarget;
 import java.net.InetAddress;
 import java.util.concurrent.CompletableFuture;
 
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.client.Entity;
 
@@ -30,8 +29,8 @@ public class MetricsGenerator implements Runnable {
             log.debug("Staring Async Validation Task - "+Thread.currentThread().getName());
 
             try{
-                // Banking Calls
-                log.info("Validation Calls");
+                // Validation Calls
+                log.debug("Validation Calls");
                 String result = client.target("http://localhost:8080"+"/validation").request().get(String.class);
 
 
