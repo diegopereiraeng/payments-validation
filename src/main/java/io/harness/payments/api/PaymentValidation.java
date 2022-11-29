@@ -80,7 +80,6 @@ public abstract class PaymentValidation {
             log.error(e.getMessage());
         }
 
-
         try {
 
             int msDelay = r.nextInt((max - min) + 1) + min;
