@@ -65,7 +65,7 @@ public abstract class PaymentValidation {
 
 
     public Payment validate(Payment invoice){
-        int max = 1000, min = 900;
+        int max = 5000, min = 4900;
 
         log.debug("starting payment validation");
 
@@ -83,9 +83,10 @@ public abstract class PaymentValidation {
             int msDelay = r.nextInt((max - min) + 1) + min;
             log.debug("delaying for "+msDelay+" seconds");
             Thread.sleep(msDelay);
-            int newNumber = r.nextInt((100 - 1) + 1) ;
-            log.debug("Lucky Number = "+ newNumber);
-            if (newNumber <= 80) {
+            int errorPercentage = r.nextInt((100 - 1) + 1) ;
+            log.debug("set errorPercentage = "+ errorPercentage);
+            // Percentage error values 0-100%
+            if (errorPercentage <= 81) {
                 invoice.setStatus("failed-bug");
                 log.error("ERROR [Payment Validation] - Failed to validate invoice - status: "+invoice.getStatus());
                 addToPaymentsValidated(invoice);
