@@ -79,9 +79,7 @@ public abstract class PaymentValidation {
             log.error("ERROR [Payment Validation] - Array List Exception");
             log.error(e.getMessage());
         }
-
         try {
-
             int msDelay = r.nextInt((max - min) + 1) + min;
             log.debug("delaying for "+msDelay+" seconds");
             Thread.sleep(msDelay);
