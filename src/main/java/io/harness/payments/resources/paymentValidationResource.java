@@ -47,6 +47,7 @@ public class paymentValidationResource {
             //throw new InternalServerErrorException(validatedPayment);
 
 
+
             //return new Representation<Payment>(HttpStatus.INTERNAL_SERVER_ERROR_500, validatedPayment);
         }
         log.debug("payment validated");
