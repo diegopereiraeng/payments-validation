@@ -50,7 +50,6 @@ public class MetricsGenerator implements Runnable {
                     log.debug("validation completed: " + result);
                 }
 
-
             }catch (Exception e){
                 //log.error("Metrics Generator Error (Validation APIs)");
             }
