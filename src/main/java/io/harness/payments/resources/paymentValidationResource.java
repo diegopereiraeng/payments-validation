@@ -46,6 +46,7 @@ public class paymentValidationResource {
                     entity(new Representation<Payment>(HttpStatus.INTERNAL_SERVER_ERROR_500, validatedPayment)).type("application/json").build();
             //throw new InternalServerErrorException(validatedPayment);
 
+
             //return new Representation<Payment>(HttpStatus.INTERNAL_SERVER_ERROR_500, validatedPayment);
         }
         log.debug("payment validated");
