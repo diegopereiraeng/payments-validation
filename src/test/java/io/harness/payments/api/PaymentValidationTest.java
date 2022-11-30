@@ -41,9 +41,9 @@ public class PaymentValidationTest {
         catch (InterruptedException ex) {
 
         }
-        throw new RuntimeException("Bug Demo CI");
 
-        //assertEquals("Health Check OK","Health Check OK");
+
+        assertEquals("Health Check OK","Health Check OK");
     }
     @Test
     public void addToPaymentsValidated() {
