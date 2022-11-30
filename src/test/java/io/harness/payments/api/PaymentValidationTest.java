@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
+import javax.ws.rs.InternalServerErrorException;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -128,11 +129,19 @@ public class PaymentValidationTest {
         }
         assertEquals(beforeAdd+1, this.payments.size());
 
-        log.error("Error to add payments to validated list");
+
+        try{
+            CustomerMethod();
+        }catch (InternalServerErrorException e){
+            log.error("Error to add payments to validated list");
+        }
+
     }
 
 
-
+    public void CustomerMethod(){
+        throw new InternalServerErrorException("Harness Error Tracking see everything");
+    }
     public void addToPaymentsValidated(Payment invoice) {
 
 
@@ -162,6 +171,7 @@ public class PaymentValidationTest {
         }catch (Exception e){
             throw e;
         }
+
 
 
 
