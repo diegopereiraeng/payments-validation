@@ -5,8 +5,12 @@ RUN curl -Lso yq https://github.com/mikefarah/yq/releases/download/2.2.1/yq_linu
     chmod +x yq && \
     mv yq /usr/local/bin
 
+RUN RUN wget -qO- https://get.et.harness.io/releases/latest/nix/harness-et-agent.tar.gz | tar -xzvf -C /opt/harness-et-agent
+
+
 RUN apt-get update && apt-get install -y unzip
 
+# NEW RELIC
 #RUN mkdir -p /opt/newrelic
 #RUN curl -O https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip && unzip newrelic-java.zip && cp -Rp ./newrelic/* /opt/newrelic/
 
