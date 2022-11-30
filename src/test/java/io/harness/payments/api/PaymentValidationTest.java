@@ -89,29 +89,13 @@ public class PaymentValidationTest {
             log.error("Error to validate");
 
 
-
-            //url = new URL(EXT.baseUri() + "/validate?id="+invoice.getId());
-            //response = new BufferedReader(new InputStreamReader(url.openStream())).readLine();
-            //invoiceVerified = MAPPER.readValue(response, Payment.class);
         }catch (Exception e){
             invoice = new Payment(3);
         }
-//        catch (MalformedURLException e) {
-//
-//            invoiceVerified = new Payment(3);
-//            //throw new RuntimeException(e);
-//        }catch (IOException e) {
-//            //throw new RuntimeException(e);
-//            invoiceVerified = new Payment(4);
-//
-//        }
 
 
         assertEquals("verified", invoice.getStatus());
 
-
-
-        //assertEquals("verified", invoice);
     }
 
     @Test
@@ -130,17 +114,31 @@ public class PaymentValidationTest {
     }
     @Test
     public void addToPaymentsValidatedTest() {
+        System.out.println("Unit Test addToPaymentsValidated");
+        System.out.println("");
+        log.info("List Size before clean: "+this.payments.size());
+        System.out.println("");
+        long beforeAdd = this.payments.size();
+
         addToPaymentsValidated(new Payment(1));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(beforeAdd+1, this.payments.size());
+
+        log.error("Error to add payments to validated list");
     }
 
 
 
     public void addToPaymentsValidated(Payment invoice) {
-        System.out.println("Unit Test addToPaymentsValidated");
-        Payment testPayment = new Payment(1);
+
+
         int listSizeBefore = this.payments.size();
         try {
-            Thread.sleep(1000);
+
             while (payLock)
             {
                 log.debug("Waiting for Thread Unlock");
@@ -155,28 +153,33 @@ public class PaymentValidationTest {
             }
             try{
                 payLock = true;
-                payments.add(testPayment);
+                payments.add(invoice);
                 payLock = false;
             }catch (Exception e){
                 payLock = false;
                 log.info("Concurrency Bug: "+ e.getMessage());
             }
+        }catch (Exception e){
+            throw e;
         }
-        catch (InterruptedException ex) {
 
-        }
 
-        log.error("Error to add payments to validated list");
 
-        assertEquals(listSizeBefore+1,this.payments.size());
     }
 
     @Test
     public void cleanList() {
         System.out.println("Unit Test cleanList");
+
         System.out.println("Adding payments to list...");
 
+        for (int i = 0; i < 1313; i++) {
+            Payment invoice = new Payment(i);
+            addToPaymentsValidated(invoice);
+        }
+
         log.info("List Size before clean: "+this.payments.size());
+
         try {
             Thread.sleep(500);
             while (payLock)
@@ -191,7 +194,7 @@ public class PaymentValidationTest {
             }
             try{
                 payLock = true;
-                List<Payment> newList = payments.subList(0,payments.size()-1);
+                List<Payment> newList = payments.subList(0,payments.size());
                 this.payments.removeAll(newList);
                 payLock = false;
             }catch (Exception e){
@@ -209,7 +212,7 @@ public class PaymentValidationTest {
 
         log.error("Error Tracking track all your errors");
 
-        assertEquals("Health Check OK","Health Check OK");
+        assertEquals(0,payments.size());
 
         // Uncomment to make build test fail and show exception in error tracking
         //throw new RuntimeException("Error Tracking is Awesome");
