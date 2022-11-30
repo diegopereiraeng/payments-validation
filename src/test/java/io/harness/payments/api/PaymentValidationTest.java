@@ -1,11 +1,12 @@
 package io.harness.payments.api;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 
 
 import static org.junit.Assert.*;
-
+@Slf4j
 public class PaymentValidationTest {
 
     @Before
@@ -25,6 +26,9 @@ public class PaymentValidationTest {
         catch (InterruptedException ex) {
 
         }
+
+        log.error("Error to validate");
+
         assertEquals("Health Check OK","Health Check OK");
     }
 
@@ -37,7 +41,9 @@ public class PaymentValidationTest {
         catch (InterruptedException ex) {
 
         }
-        assertEquals("Health Check OK","Health Check OK");
+        throw new RuntimeException("Bug Demo CI");
+
+        //assertEquals("Health Check OK","Health Check OK");
     }
     @Test
     public void addToPaymentsValidated() {
