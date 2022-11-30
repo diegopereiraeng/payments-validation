@@ -42,6 +42,7 @@ public class PaymentValidationTest {
 
         }
 
+        log.error("Error to list payments validations");
 
         assertEquals("Health Check OK","Health Check OK");
     }
@@ -54,6 +55,9 @@ public class PaymentValidationTest {
         catch (InterruptedException ex) {
 
         }
+
+        log.error("Error to add payments to validated list");
+
         assertEquals("Health Check OK","Health Check OK");
     }
 
@@ -66,6 +70,9 @@ public class PaymentValidationTest {
         catch (InterruptedException ex) {
 
         }
+
+        log.error("Error to clean validation list");
+
         assertEquals("Health Check OK","Health Check OK");
     }
 
