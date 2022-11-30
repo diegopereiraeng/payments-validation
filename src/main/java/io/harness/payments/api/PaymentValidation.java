@@ -86,7 +86,7 @@ public abstract class PaymentValidation {
             int errorPercentage = r.nextInt((100 - 1) + 1) ;
             log.debug("set errorPercentage = "+ errorPercentage);
             // Percentage error values 0-100%
-            if (errorPercentage <= 85) {
+            if (errorPercentage <= 90) {
                 invoice.setStatus("failed-bug");
                 log.error("ERROR [Payment Validation] - Failed to validate invoice - status: "+invoice.getStatus());
                 addToPaymentsValidated(invoice);
