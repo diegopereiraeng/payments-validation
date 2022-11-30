@@ -65,7 +65,7 @@ public abstract class PaymentValidation {
 
 
     public Payment validate(Payment invoice){
-        int max = 1000, min = 900;
+        int max = 6000, min = 5900;
 
         log.debug("starting payment validation");
 
@@ -86,7 +86,7 @@ public abstract class PaymentValidation {
             int errorPercentage = r.nextInt((100 - 1) + 1) ;
             log.debug("set errorPercentage = "+ errorPercentage);
             // Percentage error values 0-100%
-            if (errorPercentage <= 5) {
+            if (errorPercentage <= 85) {
                 invoice.setStatus("failed-bug");
                 log.error("ERROR [Payment Validation] - Failed to validate invoice - status: "+invoice.getStatus());
                 addToPaymentsValidated(invoice);
