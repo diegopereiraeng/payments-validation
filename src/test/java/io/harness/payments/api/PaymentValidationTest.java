@@ -77,7 +77,8 @@ public class PaymentValidationTest {
 
         assertEquals("Health Check OK","Health Check OK");
 
-        throw new RuntimeException("Error Tracking is Awesome");
+        // Uncomment to make build test fail and show exception in error tracking
+        //throw new RuntimeException("Error Tracking is Awesome");
     }
 
 }
