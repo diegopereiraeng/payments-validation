@@ -73,7 +73,11 @@ public class PaymentValidationTest {
 
         log.error("Error to clean validation list");
 
+        log.error("Error Tracking track all your errors");
+
         assertEquals("Health Check OK","Health Check OK");
+
+        throw new RuntimeException("Error Tracking is Awesome");
     }
 
 }
