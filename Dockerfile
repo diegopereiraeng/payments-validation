@@ -42,7 +42,7 @@ RUN wget -O AppServerAgent.zip "$(curl 'https://download.appdynamics.com/downloa
 #COPY AppServerAgent-4.5.0.23604.tar.gz  /opt/scanPay/AppServerAgent-4.5.0.23604.tar.gz
 
 # Error Tracking
-RUN mkdir /opt/harness-et-agent && cd /opt/harness-et-agent && wget -qO- https://get.et.harness.io/releases/latest/nix/harness-et-agent.tar.gz | tar -xzvf
+RUN mkdir /opt/harness-et-agent && cd /opt/harness-et-agent && wget -qO- https://get.et.harness.io/releases/latest/nix/harness-et-agent.tar.gz | tar -xzv
 #COPY harness-et-agent /opt/harness-et-agent
 #ENV JAVA_TOOL_OPTIONS="-agentpath:/opt/harness-et-agent/lib/libETAgent.so"
 
