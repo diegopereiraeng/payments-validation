@@ -5,8 +5,6 @@ RUN curl -Lso yq https://github.com/mikefarah/yq/releases/download/2.2.1/yq_linu
     chmod +x yq && \
     mv yq /usr/local/bin
 
-RUN RUN wget -qO- https://get.et.harness.io/releases/latest/nix/harness-et-agent.tar.gz | tar -xzvf -C /opt/harness-et-agent
-
 
 RUN apt-get update && apt-get install -y unzip
 
@@ -44,6 +42,7 @@ RUN wget -O AppServerAgent.zip "$(curl 'https://download.appdynamics.com/downloa
 #COPY AppServerAgent-4.5.0.23604.tar.gz  /opt/scanPay/AppServerAgent-4.5.0.23604.tar.gz
 
 # Error Tracking
+RUN wget -qO- https://get.et.harness.io/releases/latest/nix/harness-et-agent.tar.gz | tar -xzvf -C /opt/harness-et-agent
 #COPY harness-et-agent /opt/harness-et-agent
 #ENV JAVA_TOOL_OPTIONS="-agentpath:/opt/harness-et-agent/lib/libETAgent.so"
 
