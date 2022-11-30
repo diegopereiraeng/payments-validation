@@ -30,7 +30,7 @@ public class PaymentValidationTest {
 
     @Test
     public void getPayments() {
-        System.out.println("Unit Test run");
+        System.out.println("Unit Test getPayments");
         try {
             Thread.sleep(5000);
         }
@@ -41,7 +41,7 @@ public class PaymentValidationTest {
     }
     @Test
     public void addToPaymentsValidated() {
-        System.out.println("Unit Test run");
+        System.out.println("Unit Test addToPaymentsValidated");
         try {
             Thread.sleep(1000);
         }
@@ -53,7 +53,7 @@ public class PaymentValidationTest {
 
     @Test
     public void cleanList() {
-        System.out.println("Unit Test run");
+        System.out.println("Unit Test cleanList");
         try {
             Thread.sleep(500);
         }
