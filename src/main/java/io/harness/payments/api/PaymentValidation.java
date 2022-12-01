@@ -63,7 +63,6 @@ public abstract class PaymentValidation {
 
     };
 
-
     public Payment validate(Payment invoice){
         int max = 5000, min = 4900;
 
