@@ -47,15 +47,15 @@ public class paymentValidationResource {
                 .identifier("Guest"+getVersion())
                 .build();
 
-        boolean result = cfClient.boolVariation("VALIDATION_BETA_EXPERIMENT", target, false);
+        //boolean result = cfClient.boolVariation("VALIDATION_BETA_EXPERIMENT", target, false);
 
-        log.debug(target.getName()+ " Beta Feature is : "+result);
+        //log.debug(target.getName()+ " Beta Feature is : "+result);
 
-        if (result){
-            paymentValidation.setBetaFeature();
-        }else {
-            paymentValidation.disableBetaFeature();
-        }
+//        if (result){
+//            paymentValidation.setBetaFeature();
+//        }else {
+//            paymentValidation.disableBetaFeature();
+//        }
 
         return paymentValidation.getPayments();
     }
