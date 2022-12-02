@@ -4,4 +4,4 @@ defaultName: Stranger
 logging:
   level: INFO
   loggers:
-    io.harness.payments: INFO
+    io.harness.payments: DEBUG

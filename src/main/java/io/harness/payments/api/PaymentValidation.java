@@ -12,7 +12,17 @@ import java.util.*;
 public abstract class PaymentValidation {
     List<Payment> payments =  new ArrayList<Payment>();
 
-    boolean payLock = false;
+    private boolean payLock = false;
+
+    public boolean betaFeature = false;
+
+    public void setBetaFeature(){
+        this.betaFeature = true;
+    }
+
+    public void disableBetaFeature(){
+        this.betaFeature = false;
+    }
 
     private SecureRandom r = new SecureRandom();
 
@@ -65,9 +75,24 @@ public abstract class PaymentValidation {
 
 
     public Payment validate(Payment invoice){
+
+        // Set here the Mex and Min Response Time with FF Experiment Disabled
         int max = 1000, min = 900;
 
+        // Set percentage Error with FF Experiment Disabled
+        int errorPercentage = 5;
+
         log.debug("starting payment validation");
+
+        log.debug("beta feature is "+this.betaFeature);
+
+        // Comment this for you stable version or first deployment
+        // Set here the increased response time with ff Experiment enabled
+        if (this.betaFeature && getVersion() == "canary"){
+            max = 5000;
+            min = 4900;
+            errorPercentage = 95;
+        }
 
         try{
             if (payments.size() >= 10000){
@@ -83,10 +108,10 @@ public abstract class PaymentValidation {
             int msDelay = r.nextInt((max - min) + 1) + min;
             log.debug("delaying for "+msDelay+" seconds");
             Thread.sleep(msDelay);
-            int errorPercentage = r.nextInt((100 - 1) + 1) ;
-            log.debug("set errorPercentage = "+ errorPercentage);
+            int errorPercentageSorted = r.nextInt((100 - 1) + 1) ;
+            log.debug("set errorPercentage Sorted = "+ errorPercentageSorted);
             // Percentage error values 0-100%
-            if (errorPercentage <= 5) {
+            if (errorPercentageSorted <= errorPercentage) {
                 invoice.setStatus("failed-bug");
                 log.error("ERROR [Payment Validation] - Failed to validate invoice - status: "+invoice.getStatus());
                 addToPaymentsValidated(invoice);
@@ -119,6 +144,7 @@ public abstract class PaymentValidation {
 
     @JsonProperty
     public List<Payment> getPayments() {
+        log.debug("beta feature is "+this.betaFeature);
         return payments;
     }
 

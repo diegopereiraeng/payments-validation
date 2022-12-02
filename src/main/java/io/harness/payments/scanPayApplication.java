@@ -3,6 +3,11 @@ package io.harness.payments;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.harness.cf.client.api.BaseConfig;
+import io.harness.cf.client.api.CfClient;
+import io.harness.cf.client.api.FeatureFlagInitializeException;
+import io.harness.cf.client.connector.HarnessConfig;
+import io.harness.cf.client.connector.HarnessConnector;
 import io.harness.payments.api.Payment;
 import io.harness.payments.api.PaymentValidation;
 import io.harness.payments.behavior.BehaviorGenerator;
@@ -16,10 +21,12 @@ import io.harness.payments.resources.scanPayResource;
 
 import io.github.maksymdolgykh.dropwizard.micrometer.MicrometerBundle;
 import io.github.maksymdolgykh.dropwizard.micrometer.MicrometerHttpFilter;
+import lombok.extern.slf4j.Slf4j;
+
 import javax.servlet.FilterRegistration;
 import javax.servlet.DispatcherType;
 import java.util.EnumSet;
-
+@Slf4j
 public class scanPayApplication extends Application<scanPayConfiguration> {
 
 
@@ -47,15 +54,44 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
                 configuration.getTemplate(),
                 configuration.getDefaultName()
         );
-        final paymentValidationResource payResource = new paymentValidationResource(new PaymentValidation(){});
+
+        // Feature Flags Initialization
+        // diegopereiraeng env by default
+        String apiKey = System.getProperty("FF_API_KEY", "97ef6f1a-52bc-4790-a6db-81b61fe3ef10");
+        // Connector Config
+        HarnessConfig connectorConfig = HarnessConfig.builder().build();
+
+
+        // Create Options
+        BaseConfig options = BaseConfig.builder()
+                .pollIntervalInSeconds(60)
+                .streamEnabled(true)
+                .analyticsEnabled(true)
+                .build();
+
+        // Create the client
+        CfClient cfClient = new CfClient(new HarnessConnector(apiKey, connectorConfig), options);
+        //CfClient cfClient = new CfClient(apiKey, options);
+        try {
+            cfClient.waitForInitialization();
+        } catch (InterruptedException e) {
+            log.error("[Feature Flags] - Init Error: "+e.getMessage());
+        } catch (FeatureFlagInitializeException e) {
+            log.error("[Feature Flags] - Init Error: "+e.getMessage());
+        }
+
+        final paymentValidationResource payResource = new paymentValidationResource(new PaymentValidation(){},cfClient);
+
         final TemplateHealthCheck healthCheck =
                 new TemplateHealthCheck(configuration.getTemplate());
+
         environment.healthChecks().register("template", healthCheck);
         environment.jersey().register(resource);
         environment.jersey().register(payResource);
 //        registerMetrics(environment);
         FilterRegistration.Dynamic micrometerFilter = environment.servlets().addFilter("MicrometerHttpFilter", new MicrometerHttpFilter());
         micrometerFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+
 
 
         behaviorGenerator.init();
