@@ -31,6 +31,10 @@ public class paymentValidationResource {
 
     private final CfClient cfClient;
 
+    private boolean lock = false;
+
+    private boolean betaFeature = false;
+
     public paymentValidationResource(PaymentValidation paymentValidation, CfClient cfClient) {
 
         this.paymentValidation =  paymentValidation;
@@ -71,8 +75,25 @@ public class paymentValidationResource {
                 .build();
 
 
+        boolean result = false;
 
-        boolean result = cfClient.boolVariation("VALIDATION_BETA_EXPERIMENT", target, false);
+        try {
+            result = cfClient.boolVariation("VALIDATION_BETA_EXPERIMENT", target, false);
+            this.betaFeature = result;
+        }catch (Exception e){
+            log.warn("[Feature Flags] - ");
+            result = betaFeature;
+        }
+
+//        if (lock = true){
+//            result = betaFeature;
+//        }else{
+//            lock = true;
+//            result = cfClient.boolVariation("VALIDATION_BETA_EXPERIMENT", target, false);
+//            betaFeature = result;
+//            lock = false;
+//        }
+
 
         log.debug(target.getName()+ " Beta Feature is : "+result);
 
