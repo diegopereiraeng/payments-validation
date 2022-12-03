@@ -80,7 +80,7 @@ public abstract class PaymentValidation {
         int max = 1000, min = 900;
 
         // Set percentage Error with FF Experiment Disabled
-        int errorPercentage = 5;
+        int errorPercentage = 4;
 
         log.debug("starting payment validation");
 
