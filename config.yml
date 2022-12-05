@@ -5,3 +5,28 @@ logging:
   level: INFO
   loggers:
     io.harness.payments: DEBUG
+
+mongoDBConnection:
+  credentials:
+    username: "user_donuts"
+    password: "pAsw0Rd"
+  seeds:
+    - host: "mongodb"
+      port: 27017
+  database: "donuts"
+
+
+
+swagger:
+  basePath: /validation
+  resourcePackage: io.harness.payments
+  scan: true
+  info:
+    version: "1.0.0"
+    title: "Payments Validation API Doc"
+    description: "A simple API used for expose some operation on MongoDB collection"
+    termsOfService: "http://swagger.io/terms/"
+    contact:
+      name: "Payments Validation API"
+    license:
+      name: "Diego Pereira"

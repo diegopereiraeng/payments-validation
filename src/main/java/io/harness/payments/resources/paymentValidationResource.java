@@ -75,6 +75,7 @@ public class paymentValidationResource {
                 .build();
 
 
+
         boolean result = false;
 
         try {
@@ -105,7 +106,7 @@ public class paymentValidationResource {
 
         Payment validatedPayment = paymentValidation.validate(invoice);
 
-        if (validatedPayment.getStatus() != "verified" ){
+        if (validatedPayment.getStatus() != "verified" && validatedPayment.getStatus() != "authorized" ){
             log.info("payment not validated");
 
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).
@@ -121,6 +122,9 @@ public class paymentValidationResource {
                 entity(new Representation<Payment>(HttpStatus.OK_200, validatedPayment)).type("application/json").build();
         //return new Representation<Payment>(HttpStatus.OK_200, validatedPayment);
     }
+
+
+
 
     private String getVersion(){
         String version = "stable";

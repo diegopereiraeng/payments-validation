@@ -2,10 +2,14 @@ package io.harness.payments.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Payment {
+import java.io.Serializable;
+
+public class Payment implements Serializable {
     private long id;
 
     private String status;
+
+    private double validationID;
 
     public Payment() {
         // Jackson deserialization
@@ -14,6 +18,7 @@ public class Payment {
     public Payment(long id) {
         this.id = id;
         this.status = "not-verified";
+        this.validationID = 0;
     }
 
     @JsonProperty
@@ -31,4 +36,16 @@ public class Payment {
         this.status = status;
         return this.status;
     }
+
+    @JsonProperty
+    public double setValidationID(double validationID) {
+        this.validationID = validationID;
+        return this.validationID;
+    }
+
+    @JsonProperty
+    public double getValidationID() {
+        return validationID;
+    }
+
 }

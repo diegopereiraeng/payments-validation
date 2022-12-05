@@ -1,5 +1,9 @@
 package io.harness.payments;
 
+import com.mongodb.*;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -12,6 +16,7 @@ import io.harness.payments.api.Payment;
 import io.harness.payments.api.PaymentValidation;
 import io.harness.payments.behavior.BehaviorGenerator;
 import io.harness.payments.health.TemplateHealthCheck;
+import io.harness.payments.resources.authorizationResource;
 import io.harness.payments.resources.paymentValidationResource;
 import io.harness.payments.resources.scanPayResource;
 
@@ -26,6 +31,12 @@ import lombok.extern.slf4j.Slf4j;
 import javax.servlet.FilterRegistration;
 import javax.servlet.DispatcherType;
 import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
+
+import org.bson.Document;
+
+
 @Slf4j
 public class scanPayApplication extends Application<scanPayConfiguration> {
 
@@ -55,6 +66,17 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
                 configuration.getDefaultName()
         );
 
+        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://host1:27017"));
+
+        MongoIterable dbs = mongoClient.listDatabaseNames();
+
+        System.out.println(dbs); // [journaldev, local, admin]
+
+        MongoDatabase database = mongoClient.getDatabase("test");
+
+
+        MongoCollection<Document> coll = database.getCollection("myTestCollection");
+
         // Feature Flags Initialization
         // diegopereiraeng env by default
         String apiKey = System.getProperty("FF_API_KEY", "97ef6f1a-52bc-4790-a6db-81b61fe3ef10");
@@ -80,7 +102,11 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
             log.error("[Feature Flags] - Init Error: "+e.getMessage());
         }
 
-        final paymentValidationResource payResource = new paymentValidationResource(new PaymentValidation(){},cfClient);
+        final PaymentValidation payValidation = new PaymentValidation(){};
+
+        final paymentValidationResource payResource = new paymentValidationResource(payValidation,cfClient);
+
+        final authorizationResource authResource = new authorizationResource(payValidation,cfClient);
 
         final TemplateHealthCheck healthCheck =
                 new TemplateHealthCheck(configuration.getTemplate());
@@ -88,6 +114,7 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
         environment.healthChecks().register("template", healthCheck);
         environment.jersey().register(resource);
         environment.jersey().register(payResource);
+        environment.jersey().register(authResource);
 //        registerMetrics(environment);
         FilterRegistration.Dynamic micrometerFilter = environment.servlets().addFilter("MicrometerHttpFilter", new MicrometerHttpFilter());
         micrometerFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
