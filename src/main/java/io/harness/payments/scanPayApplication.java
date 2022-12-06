@@ -81,6 +81,7 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
         environment.lifecycle().manage(mongoManaged);
         environment.healthChecks().register("MongoHealthCheck", new MongoHealthCheck(mongoManaged));
 
+
         // Feature Flags Initialization
         // diegopereiraeng env by default
         String apiKey = System.getProperty("FF_API_KEY", "97ef6f1a-52bc-4790-a6db-81b61fe3ef10");
