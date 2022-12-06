@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import io.harness.cf.client.api.CfClient;
 
 @Slf4j
-@Path("/authorization")
+@Path("/auth")
 @Produces(MediaType.APPLICATION_JSON)
 public class authorizationResource {
     private final PaymentValidation paymentValidation;
@@ -41,7 +41,7 @@ public class authorizationResource {
         this.paymentValidation =  paymentValidation;
         this.cfClient = cfClient;
     }
-
+    @Path("/authorization")
     @POST
     @Timed
     public Response authorize(@NotNull @Valid final Payment invoice) {
@@ -72,7 +72,7 @@ public class authorizationResource {
             //paymentValidation.disableBetaFeature();
         }
 
-        double authorization = paymentValidation.getAuthorization(invoice.getId());
+        String authorization = paymentValidation.getAuthorization(invoice.getId());
 
         invoice.setValidationID(authorization);
 

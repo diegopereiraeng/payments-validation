@@ -20,6 +20,9 @@ import io.harness.payments.resources.authorizationResource;
 import io.harness.payments.resources.paymentValidationResource;
 import io.harness.payments.resources.scanPayResource;
 
+import io.harness.payments.db.MongoManaged;
+import io.harness.payments.health.MongoHealthCheck;
+
 //import io.prometheus.client.CollectorRegistry;
 //import io.prometheus.client.dropwizard.DropwizardExports;
 //import io.prometheus.client.exporter.MetricsServlet;
@@ -66,16 +69,17 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
                 configuration.getDefaultName()
         );
 
-        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://host1:27017"));
+        // Mongo
+        MongoManaged mongoManaged;
+        try{
+            mongoManaged = new MongoManaged(configuration.mongo);
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
 
-        MongoIterable dbs = mongoClient.listDatabaseNames();
-
-        System.out.println(dbs); // [journaldev, local, admin]
-
-        MongoDatabase database = mongoClient.getDatabase("test");
-
-
-        MongoCollection<Document> coll = database.getCollection("myTestCollection");
+        environment.lifecycle().manage(mongoManaged);
+        environment.healthChecks().register("MongoHealthCheck", new MongoHealthCheck(mongoManaged));
 
         // Feature Flags Initialization
         // diegopereiraeng env by default
@@ -92,8 +96,8 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
                 .build();
 
         // Create the client
-        CfClient cfClient = new CfClient(new HarnessConnector(apiKey, connectorConfig), options);
-        //CfClient cfClient = new CfClient(apiKey, options);
+        //CfClient cfClient = new CfClient(new HarnessConnector(apiKey, connectorConfig), options);
+        CfClient cfClient = new CfClient(apiKey, options);
         try {
             cfClient.waitForInitialization();
         } catch (InterruptedException e) {
@@ -102,7 +106,7 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
             log.error("[Feature Flags] - Init Error: "+e.getMessage());
         }
 
-        final PaymentValidation payValidation = new PaymentValidation(){};
+        final PaymentValidation payValidation = new PaymentValidation(mongoManaged){};
 
         final paymentValidationResource payResource = new paymentValidationResource(payValidation,cfClient);
 
@@ -114,14 +118,14 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
         environment.healthChecks().register("template", healthCheck);
         environment.jersey().register(resource);
         environment.jersey().register(payResource);
-        environment.jersey().register(authResource);
+        //environment.jersey().register(authResource);
 //        registerMetrics(environment);
         FilterRegistration.Dynamic micrometerFilter = environment.servlets().addFilter("MicrometerHttpFilter", new MicrometerHttpFilter());
         micrometerFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
 
 
 
-        behaviorGenerator.init();
+        //behaviorGenerator.init();
 
     }
 

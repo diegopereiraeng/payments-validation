@@ -18,6 +18,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <dropwizard.version>2.1.4</dropwizard.version>
         <mainClass>io.harness.payments.scanPayApplication</mainClass>
+<!--        <java.version>11</java.version>-->
     </properties>
 
     <dependencyManagement>
@@ -89,14 +90,15 @@
         <dependency>
             <groupId>io.harness</groupId>
             <artifactId>ff-java-server-sdk</artifactId>
-            <version>1.1.5</version>
+            <version>1.1.5.3</version>
         </dependency>
 
         <dependency>
             <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver</artifactId>
-            <version>3.4.3</version>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.4.2</version>
         </dependency>
+
 
         <dependency>
             <groupId>com.smoketurner</groupId>
@@ -104,7 +106,12 @@
             <version>LATEST</version>
         </dependency>
 
-
+        <!-- https://mvnrepository.com/artifact/org.mongojack/mongojack -->
+        <dependency>
+            <groupId>org.mongojack</groupId>
+            <artifactId>mongojack</artifactId>
+            <version>2.1.0</version>
+        </dependency>
 
         <!--        <dependency>-->
         <!--            <groupId>io.prometheus</groupId>-->

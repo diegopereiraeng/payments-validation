@@ -17,6 +17,8 @@ public class scanPayConfiguration extends Configuration {
     private SwaggerBundleConfiguration swaggerBundleConfiguration;
 
 
+    @NotNull
+    public MongoConfiguration mongo = new MongoConfiguration();
 
     @NotEmpty
     private String template;

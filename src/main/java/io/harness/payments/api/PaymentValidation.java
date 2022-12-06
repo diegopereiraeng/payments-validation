@@ -1,16 +1,39 @@
 package io.harness.payments.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.result.InsertOneResult;
+import io.harness.payments.MongoConfiguration;
+import io.harness.payments.db.MongoManaged;
 import lombok.extern.slf4j.Slf4j;
+
+import static org.mongojack.JacksonDBCollection.wrap;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.RejectedExecutionException;
+
+import static org.mongojack.JacksonDBCollection.wrap;
 
 @Slf4j
 public abstract class PaymentValidation {
+
+    //private JacksonDBCollection<Payment, String> paymentsDAO;
+
+    MongoManaged mongodb;
+
+    public PaymentValidation(MongoManaged mongodb){
+
+        try {
+            this.mongodb = mongodb;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     List<Payment> payments =  new ArrayList<Payment>();
 
     private Map<Double, Long> authorizations
@@ -81,53 +104,33 @@ public abstract class PaymentValidation {
 
     };
 
-    public double getAuthorization(long invoiceID){
+    public String getAuthorization(long invoiceID){
 
-        double authorizationID = r.nextDouble() * (900000 - 100000) + 100000 ;
-        this.authorizations.put(authorizationID,invoiceID);
-        return authorizationID;
+        log.info("Diego getting authorization");
+
+        Authorization auth;
+        log.info("Getting Authorization for invoiceID: "+invoiceID);
+        try {
+            auth = mongodb.getAuthorization(invoiceID);
+            return auth.getValidationId();
+        }catch (Exception e){
+            return null;
+        }
+
     }
 
     public boolean authorize(Payment invoice){
-        while (authorizationLock)
-        {
-            log.debug("Waiting for Thread Unlock");
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                log.error("Thread Safe Error: "+e.getMessage());
-                break;
-            }
-        }
-        authorizationLock = true;
-//        for ( String key : authorizations.keySet() ) {
-//            System.out.println( key );
-//            if(Objects.equals(key, invoice.getValidationID() )){
-//                if (Objects.equals(authorizations.get(key), invoice.getId() )){
-//                    authorizationLock = false;
-//                    authorizations.remove(key);
-//                    return true; //return the first found
-//                }
-//                log.error("Invalid Invoice ID");
-//            }
-//
-//        }
-        log.info("Diego");
-        log.info(authorizations.keySet().toString());
-        if (Objects.equals(authorizations.get(invoice.getValidationID()), invoice.getId() )){
-            authorizationLock = false;
-            authorizations.remove(invoice.getValidationID());
-            return true; //return the first found
-        }
-        log.error("Invalid Invoice ID");
 
-        authorizationLock = false;
-        return false;
+        boolean accepted = mongodb.authorize(invoice.getId());
+
+        log.info("Diego");
+
+        return accepted;
     }
 
     public Payment validate(Payment invoice){
 
-        // Set here the Mex and Min Response Time with FF Experiment Disabled
+        // Set here the Max and Min Response Time with FF Experiment Disabled
         int max = 1000, min = 900;
 
         // Set percentage Error with FF Experiment Disabled
@@ -138,7 +141,7 @@ public abstract class PaymentValidation {
         log.debug("beta feature is "+this.betaFeature);
 
         if (enableAuthorization){
-            if (Long.valueOf((long) invoice.getValidationID()) == 0){
+            if (invoice.getValidationID() == ""){
                 log.debug("validation id not provided");
 
             }else {

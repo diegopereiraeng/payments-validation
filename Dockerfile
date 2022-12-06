@@ -74,6 +74,8 @@ CMD bash -c ' \
     fi; \
     \
     CONFIG_FILE=/opt/scanPay/config.yml; \
+    if [[ "" != "MONGO_AUTH" ]]; then yq write -i $CONFIG_FILE connectionString "MONGO_AUTH"; fi; \
+	\
     #if [[ "" != "$ALLOWED_ORIGINS" ]]; then yq write -i $CONFIG_FILE allowedOrigins "$ALLOWED_ORIGINS"; fi; \
     #if [[ "" != "$ELK_URL" ]]; then yq write -i $CONFIG_FILE elkUrl "$ELK_URL"; fi; \
     #if [[ "" != "$ELK_INDEX" ]]; then yq write -i $CONFIG_FILE elkIndex "$ELK_INDEX"; fi; \
@@ -83,6 +85,4 @@ CMD bash -c ' \
     #if [[ "" != "$FF_LOG_KEY" ]]; then yq write -i $CONFIG_FILE ffLogKey "$FF_LOG_KEY"; fi; \
     #if [[ "" != "$FF_TARGET" ]]; then yq write -i $CONFIG_FILE target "$FF_TARGET"; fi; \
     #if [[ "" != "$LOG_MSG" ]]; then yq write -i $CONFIG_FILE defaultConfig.logConfig.errorMessage "LOG_MSG"; fi; \
-
-
     java $JAVA_TOOL_OPTIONS $JAVA_OPTS -XX:-UseTypeSpeculation -Xshare:off -Xms160m -Xmx160m -jar app.jar server config.yml'

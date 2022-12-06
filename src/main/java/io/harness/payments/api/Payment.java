@@ -9,7 +9,9 @@ public class Payment implements Serializable {
 
     private String status;
 
-    private double validationID;
+    private String validationID;
+
+    private String errorMsg;
 
     public Payment() {
         // Jackson deserialization
@@ -18,7 +20,18 @@ public class Payment implements Serializable {
     public Payment(long id) {
         this.id = id;
         this.status = "not-verified";
-        this.validationID = 0;
+        this.validationID = "";
+        this.errorMsg = "";
+    }
+
+    @JsonProperty
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    @JsonProperty
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
     @JsonProperty
@@ -38,13 +51,13 @@ public class Payment implements Serializable {
     }
 
     @JsonProperty
-    public double setValidationID(double validationID) {
+    public String setValidationID(String validationID) {
         this.validationID = validationID;
         return this.validationID;
     }
 
     @JsonProperty
-    public double getValidationID() {
+    public String getValidationID() {
         return validationID;
     }
 
