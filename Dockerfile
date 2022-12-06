@@ -86,3 +86,4 @@ CMD bash -c ' \
     #if [[ "" != "$FF_TARGET" ]]; then yq write -i $CONFIG_FILE target "$FF_TARGET"; fi; \
     #if [[ "" != "$LOG_MSG" ]]; then yq write -i $CONFIG_FILE defaultConfig.logConfig.errorMessage "LOG_MSG"; fi; \
     java $JAVA_TOOL_OPTIONS $JAVA_OPTS -XX:-UseTypeSpeculation -Xshare:off -Xms160m -Xmx160m -jar app.jar server config.yml'
+
