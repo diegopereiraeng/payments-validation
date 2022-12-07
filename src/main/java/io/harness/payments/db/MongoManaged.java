@@ -42,6 +42,9 @@ public class MongoManaged implements Managed {
 //        MongoClientSettings settings = MongoClientSettings.builder()
 //                .applyConnectionString(connectionString)
 //                .build();
+
+        uri = System.getenv("MONGO_AUTH");
+        log.info("[MONGODB] - Connecting to MONGODB: "+uri);
         try{
             this.mongo = MongoClients.create(uri);
             CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
@@ -49,7 +52,7 @@ public class MongoManaged implements Managed {
             this.db = this.mongo.getDatabase("banking").withCodecRegistry(pojoCodecRegistry);
         }catch (Exception e){
             uri = System.getenv("MONGO_AUTH");
-            log.info("[MONGODB] - Failed Mongo using config, trying env var:");
+            log.info("[MONGODB] - Failed to connect to Mongodb using config file, trying env var:");
             log.info(uri);
             this.mongo = MongoClients.create(uri);
             CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
