@@ -42,10 +42,21 @@ public class MongoManaged implements Managed {
 //        MongoClientSettings settings = MongoClientSettings.builder()
 //                .applyConnectionString(connectionString)
 //                .build();
-        this.mongo = MongoClients.create(uri);
-        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
-        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
-        this.db = this.mongo.getDatabase("banking").withCodecRegistry(pojoCodecRegistry);;
+        try{
+            this.mongo = MongoClients.create(uri);
+            CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+            CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+            this.db = this.mongo.getDatabase("banking").withCodecRegistry(pojoCodecRegistry);
+        }catch (Exception e){
+            uri = System.getenv("MONGO_AUTH");
+            log.info("[MONGODB] - Failed Mongo using config, trying env var:");
+            log.info(uri);
+            this.mongo = MongoClients.create(uri);
+            CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+            CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+            this.db = this.mongo.getDatabase("banking").withCodecRegistry(pojoCodecRegistry);
+        }
+
 
 //        MongoCollection<Authorization> collection = this.db.getCollection("auth", Authorization.class);
 //        collection.insertOne(new Authorization(50));

@@ -17,7 +17,7 @@ swagger:
   info:
     version: "1.0.0"
     title: "Payments Validation API Doc"
-    description: "A simple API used for expose some operation on MongoDB collection"
+    description: "A simple API used for Banking Demo"
     termsOfService: "http://swagger.io/terms/"
     contact:
       name: "Payments Validation API"
