@@ -13,11 +13,13 @@
 
     <name>scanPay</name>
 
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <dropwizard.version>2.1.4</dropwizard.version>
         <mainClass>io.harness.payments.scanPayApplication</mainClass>
+<!--        <java.version>11</java.version>-->
     </properties>
 
     <dependencyManagement>
@@ -89,24 +91,39 @@
         <dependency>
             <groupId>io.harness</groupId>
             <artifactId>ff-java-server-sdk</artifactId>
-            <version>1.1.5</version>
+            <version>1.1.8</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.5.1</version>
+        </dependency>
 
+        <dependency>
+            <groupId>com.smoketurner</groupId>
+            <artifactId>dropwizard-swagger</artifactId>
+            <version>LATEST</version>
+        </dependency>
 
-
+        <!-- https://mvnrepository.com/artifact/org.mongojack/mongojack -->
+        <dependency>
+            <groupId>org.mongojack</groupId>
+            <artifactId>mongojack</artifactId>
+            <version>2.1.0</version>
+        </dependency>
 
         <!--        <dependency>-->
-<!--            <groupId>io.prometheus</groupId>-->
-<!--            <artifactId>simpleclient_dropwizard</artifactId>-->
-<!--            <version>0.5.0</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.prometheus/simpleclient_servlet &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>io.prometheus</groupId>-->
-<!--            <artifactId>simpleclient_servlet</artifactId>-->
-<!--            <version>0.5.0</version>-->
-<!--        </dependency>-->
+        <!--            <groupId>io.prometheus</groupId>-->
+        <!--            <artifactId>simpleclient_dropwizard</artifactId>-->
+        <!--            <version>0.5.0</version>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.prometheus/simpleclient_servlet &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.prometheus</groupId>-->
+        <!--            <artifactId>simpleclient_servlet</artifactId>-->
+        <!--            <version>0.5.0</version>-->
+        <!--        </dependency>-->
     </dependencies>
 
     <build>

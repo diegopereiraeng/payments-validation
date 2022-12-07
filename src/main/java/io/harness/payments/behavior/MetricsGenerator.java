@@ -33,7 +33,7 @@ public class MetricsGenerator implements Runnable {
             try{
                 // Validation Calls
                 log.debug("Validation Calls");
-                String result = client.target("http://localhost:8080"+"/validation").request().get(String.class);
+                String result = client.target("http://localhost:8080"+"/auth/validation").request().get(String.class);
 
 
                 if (r.nextInt(2) <= 0) {
@@ -45,7 +45,7 @@ public class MetricsGenerator implements Runnable {
                             //.put("JSON3", new JSONObject().put("key1", "value1"))
                             .toString();
 
-                    String result2 = client.target("http://localhost:8080" + "/validation").request().post(Entity.json(jsonString), String.class);
+                    String result2 = client.target("http://localhost:8080" + "/auth/validation").request().post(Entity.json(jsonString), String.class);
 
                     log.debug("validation completed: " + result);
                 }
