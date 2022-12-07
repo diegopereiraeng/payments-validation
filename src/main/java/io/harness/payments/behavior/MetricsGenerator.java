@@ -42,6 +42,7 @@ public class MetricsGenerator implements Runnable {
                     String jsonString = new JSONObject()
                             .put("id", 7)
                             .put("status", "not verified")
+                            .put("validationID", "")
                             //.put("JSON3", new JSONObject().put("key1", "value1"))
                             .toString();
 
