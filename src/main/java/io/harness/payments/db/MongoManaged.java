@@ -1,14 +1,12 @@
 package io.harness.payments.db;
 
+import com.mongodb.*;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.InsertOneResult;
 import io.harness.payments.api.Authorization;
 import io.harness.payments.MongoConfiguration;
-import com.mongodb.DB;
-import com.mongodb.Mongo;
 import io.dropwizard.lifecycle.Managed;
 
-import com.mongodb.ConnectionString;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -46,7 +44,14 @@ public class MongoManaged implements Managed {
         //uri = System.getenv("MONGO_AUTH");
         log.info("[MONGODB] - Connecting to MONGODB: "+uri);
         try{
-            this.mongo = MongoClients.create(uri);
+            ConnectionString connectionString = new ConnectionString(uri);
+            MongoClientSettings settings = MongoClientSettings.builder()
+                    .applyConnectionString(connectionString)
+                    .serverApi(ServerApi.builder()
+                            .version(ServerApiVersion.V1)
+                            .build())
+                    .build();
+            this.mongo = MongoClients.create(settings);
             CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
             CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
             this.db = this.mongo.getDatabase("banking").withCodecRegistry(pojoCodecRegistry);
@@ -54,7 +59,14 @@ public class MongoManaged implements Managed {
             uri = System.getenv("MONGO_AUTH");
             log.info("[MONGODB] - Failed to connect to Mongodb using config file, trying env var:");
             log.info(uri);
-            this.mongo = MongoClients.create(uri);
+            ConnectionString connectionString = new ConnectionString(uri);
+            MongoClientSettings settings = MongoClientSettings.builder()
+                    .applyConnectionString(connectionString)
+                    .serverApi(ServerApi.builder()
+                            .version(ServerApiVersion.V1)
+                            .build())
+                    .build();
+            this.mongo = MongoClients.create(settings);
             CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
             CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
             this.db = this.mongo.getDatabase("banking").withCodecRegistry(pojoCodecRegistry);
