@@ -43,7 +43,7 @@ public class MongoManaged implements Managed {
 //                .applyConnectionString(connectionString)
 //                .build();
 
-        uri = System.getenv("MONGO_AUTH");
+        //uri = System.getenv("MONGO_AUTH");
         log.info("[MONGODB] - Connecting to MONGODB: "+uri);
         try{
             this.mongo = MongoClients.create(uri);
