@@ -147,7 +147,7 @@ public abstract class PaymentValidation {
 
             }else {
 
-                if (this.betaFeature && getVersion() == "canary") {
+                if (this.betaFeature && getVersion() == "not-bug") {
                     max = 5000;
                     min = 4900;
                     errorPercentage = 95;
