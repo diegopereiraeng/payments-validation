@@ -75,9 +75,10 @@ CMD bash -c ' \
     \
     CONFIG_FILE=/opt/scanPay/config.yml; \
     echo "$MONGO_AUTH"; \
-    MONGO=`echo $MONGO_AUTH | base64 -d`; \
+
     if [[ "" != "MONGO_AUTH" ]]; then yq write -i $CONFIG_FILE mongo.connectionString "$MONGO"; fi; \
-	\
+	echo "Config File:" \
+	cat $CONFIG_FILE \
     #if [[ "" != "$ALLOWED_ORIGINS" ]]; then yq write -i $CONFIG_FILE allowedOrigins "$ALLOWED_ORIGINS"; fi; \
     #if [[ "" != "$ELK_URL" ]]; then yq write -i $CONFIG_FILE elkUrl "$ELK_URL"; fi; \
     #if [[ "" != "$ELK_INDEX" ]]; then yq write -i $CONFIG_FILE elkIndex "$ELK_INDEX"; fi; \
