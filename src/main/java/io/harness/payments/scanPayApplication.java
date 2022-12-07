@@ -144,8 +144,7 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
 
         // Enable CORS headers - END
 
-
-        //behaviorGenerator.init();
+        behaviorGenerator.init();
 
     }
 
