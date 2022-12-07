@@ -161,7 +161,7 @@ public abstract class PaymentValidation {
             // Comment this for you stable version or first deployment
             // Set here the increased response time with ff Experiment enabled
             // change "canary" to "not-bug" and vice versa to enable canary bug or not
-            if (this.betaFeature && getVersion() == "not-bug") {
+            if (this.betaFeature && getVersion() == "canary") {
                 max = 5000;
                 min = 4900;
                 errorPercentage = 95;
