@@ -106,7 +106,7 @@ public abstract class PaymentValidation {
 
     public String getAuthorization(long invoiceID){
 
-        log.info("Diego getting authorization");
+        //log.info("getting authorization");
 
         Authorization auth;
         log.info("Getting Authorization for invoiceID: "+invoiceID);
@@ -114,6 +114,7 @@ public abstract class PaymentValidation {
             auth = mongodb.getAuthorization(invoiceID);
             return auth.getValidationId();
         }catch (Exception e){
+            log.error("[Authorization] - message: "+e.getMessage());
             return null;
         }
 
