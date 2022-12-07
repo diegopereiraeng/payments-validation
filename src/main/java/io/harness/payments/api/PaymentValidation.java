@@ -146,6 +146,31 @@ public abstract class PaymentValidation {
                 log.debug("validation id not provided");
 
             }else {
+
+                if (this.betaFeature && getVersion() == "canary") {
+                    max = 5000;
+                    min = 4900;
+                    errorPercentage = 95;
+
+                    int msDelay = r.nextInt((max - min) + 1) + min;
+
+                    try {
+                        Thread.sleep(msDelay);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    int errorPercentageSorted = r.nextInt((100 - 1) + 1);
+                    log.debug("set errorPercentage Sorted = " + errorPercentageSorted);
+                    // Percentage error values 0-100%
+                    if (errorPercentageSorted <= errorPercentage) {
+                        invoice.setStatus("failed-bug");
+                        log.error("ERROR [Payment Validation] - Failed to validate invoice - status: " + invoice.getStatus());
+                        addToPaymentsValidated(invoice);
+                        return invoice;
+                    }
+
+                }
+
                 if (authorize(invoice)){
                     log.info("authorized");
                     invoice.setStatus("authorized");
