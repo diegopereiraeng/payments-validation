@@ -141,10 +141,10 @@ public abstract class PaymentValidation {
 
         log.debug("beta feature is "+this.betaFeature);
 
-        if (enableAuthorization && !invoice.getValidationID().equals("") && !invoice.getValidationID().equals("load")){
+        if (enableAuthorization && !(invoice.getValidationID().equals("")) && !(invoice.getValidationID().equals("load"))){
 
             log.info("[Payment Validation] Authorizing id: '"+invoice.getValidationID()+"'");
-
+            String errorMsg = "";
             if (invoice.getValidationID().equals("")){
                 log.debug("validation id not provided");
 
@@ -174,14 +174,18 @@ public abstract class PaymentValidation {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-
-                if (authorize(invoice) != null){
+                Authorization auth = authorize(invoice);
+                if (auth.getErrorMsg().equals("")){
                     log.debug("authorized");
                     invoice.setStatus("authorized");
+
                     return invoice;
+                }else {
+                    errorMsg = auth.getErrorMsg();
                 }
 
             }
+            invoice.setErrorMsg(errorMsg);
             invoice.setStatus("not-authorized");
             return invoice;
         }else {
