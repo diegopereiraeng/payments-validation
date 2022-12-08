@@ -1,22 +1,16 @@
 package io.harness.payments.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.result.InsertOneResult;
-import io.harness.payments.MongoConfiguration;
+
 import io.harness.payments.db.MongoManaged;
 import lombok.extern.slf4j.Slf4j;
-
-import static org.mongojack.JacksonDBCollection.wrap;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.RejectedExecutionException;
 
-import static org.mongojack.JacksonDBCollection.wrap;
 
 @Slf4j
 public abstract class PaymentValidation {
@@ -124,7 +118,7 @@ public abstract class PaymentValidation {
 
         boolean accepted = mongodb.authorize(invoice.getId());
 
-        log.info("Diego");
+        //log.info("Diego");
 
         return accepted;
     }
@@ -142,7 +136,7 @@ public abstract class PaymentValidation {
 
         log.debug("beta feature is "+this.betaFeature);
 
-        if (enableAuthorization && invoice.getValidationID().equals("") && invoice.getValidationID().equals("load")){
+        if (enableAuthorization && !invoice.getValidationID().equals("") && !invoice.getValidationID().equals("load")){
 
             log.info("[Payment Validation] Authorizing id: '"+invoice.getValidationID()+"'");
 
@@ -177,7 +171,7 @@ public abstract class PaymentValidation {
                 }
 
                 if (authorize(invoice)){
-                    log.info("authorized");
+                    log.debug("authorized");
                     invoice.setStatus("authorized");
                     return invoice;
                 }
@@ -187,7 +181,7 @@ public abstract class PaymentValidation {
             return invoice;
         }else {
 
-            log.info("[Payment Validation] Skipped auth for load generation");
+            log.debug("[Payment Validation] Skipped auth for load generation");
             // Comment this for you stable version or first deployment
             // Set here the increased response time with ff Experiment enabled
             // change "canary" to "not-bug" and vice versa to enable canary bug or not

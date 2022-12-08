@@ -109,7 +109,7 @@ public class paymentValidationResource {
 
         Payment validatedPayment = paymentValidation.validate(invoice);
 
-        if (validatedPayment.getStatus() != "verified" && validatedPayment.getStatus() != "authorized" ){
+        if (validatedPayment.getStatus().equals("verified") && validatedPayment.getStatus() != "authorized" ){
             log.info("payment not validated");
 
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).

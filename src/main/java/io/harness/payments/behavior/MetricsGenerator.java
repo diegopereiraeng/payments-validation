@@ -1,5 +1,6 @@
 package io.harness.payments.behavior;
 
+import io.harness.payments.api.Authorization;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -31,18 +32,33 @@ public class MetricsGenerator implements Runnable {
             log.debug("Staring Async Validation Task - "+Thread.currentThread().getName());
 
             try{
+                int invoiceID = r.nextInt((9999 - 999) + 1) + 999;
+
                 // Validation Calls
                 log.debug("Validation Calls");
                 String result = client.target("http://localhost:8080"+"/auth/validation").request().get(String.class);
+
+
+                // Get Authorization
+                String authJson = new JSONObject()
+                        .put("id", invoiceID)
+                        .put("status", "not verified")
+                        .put("validationID", "load")
+                        //.put("JSON3", new JSONObject().put("key1", "value1"))
+                        .toString();
+
+                Authorization auth = client.target("http://localhost:8080" + "/auth/authorization").request().post(Entity.json(authJson), Authorization.class);
+
+                log.info("Auth = "+auth.getValidationId());
 
 
                 if (r.nextInt(2) <= 0) {
                     // Validation Body
 
                     String jsonString = new JSONObject()
-                            .put("id", 7)
+                            .put("id", invoiceID)
                             .put("status", "not verified")
-                            .put("validationID", "load")
+                            .put("validationID", auth.getValidationId())
                             //.put("JSON3", new JSONObject().put("key1", "value1"))
                             .toString();
 
