@@ -132,7 +132,8 @@ public abstract class PaymentValidation {
     public Payment validate(Payment invoice){
 
         // Set here the Max and Min Response Time with FF Experiment Disabled
-        int max = 1000, min = 900;
+        int max = 700, min = 500;
+        int msDelay = r.nextInt((max - min) + 1) + min;
 
         // Set percentage Error with FF Experiment Disabled
         int errorPercentage = 4;
@@ -155,13 +156,9 @@ public abstract class PaymentValidation {
                     min = 4900;
                     errorPercentage = 95;
 
-                    int msDelay = r.nextInt((max - min) + 1) + min;
+                    msDelay = r.nextInt((max - min) + 1) + min;
 
-                    try {
-                        Thread.sleep(msDelay);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+
                     int errorPercentageSorted = r.nextInt((100 - 1) + 1);
                     log.debug("set errorPercentage Sorted = " + errorPercentageSorted);
                     // Percentage error values 0-100%
@@ -172,6 +169,11 @@ public abstract class PaymentValidation {
                         return invoice;
                     }
 
+                }
+                try {
+                    Thread.sleep(msDelay);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
 
                 if (authorize(invoice)){
@@ -193,6 +195,7 @@ public abstract class PaymentValidation {
                 max = 5000;
                 min = 4900;
                 errorPercentage = 95;
+                msDelay = r.nextInt((max - min) + 1) + min;
             }
 
             try {
@@ -206,7 +209,7 @@ public abstract class PaymentValidation {
                 log.error(e.getMessage());
             }
             try {
-                int msDelay = r.nextInt((max - min) + 1) + min;
+
                 log.debug("delaying for " + msDelay + " seconds");
                 Thread.sleep(msDelay);
                 int errorPercentageSorted = r.nextInt((100 - 1) + 1);
