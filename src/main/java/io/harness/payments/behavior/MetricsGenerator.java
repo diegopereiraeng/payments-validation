@@ -32,27 +32,31 @@ public class MetricsGenerator implements Runnable {
             log.debug("Staring Async Validation Task - "+Thread.currentThread().getName());
 
             try{
-                int invoiceID = r.nextInt((9999 - 999) + 1) + 999;
+                int invoiceID = r.nextInt((99999 - 9999) + 1) + 9999;
 
                 // Validation Calls
                 log.debug("Validation Calls");
                 String result = client.target("http://localhost:8080"+"/auth/validation").request().get(String.class);
 
 
-                // Get Authorization
-                String authJson = new JSONObject()
-                        .put("id", invoiceID)
-                        .put("status", "not verified")
-                        .put("validationID", "load")
-                        //.put("JSON3", new JSONObject().put("key1", "value1"))
-                        .toString();
 
-                Authorization auth = client.target("http://localhost:8080" + "/auth/authorization").request().post(Entity.json(authJson), Authorization.class);
-
-                log.info("Auth = "+auth.getValidationId());
 
 
                 if (r.nextInt(2) <= 0) {
+
+                    // Get Authorization
+                    String authJson = new JSONObject()
+                            .put("id", invoiceID)
+                            .put("status", "not verified")
+                            .put("validationID", "")
+                            //.put("JSON3", new JSONObject().put("key1", "value1"))
+                            .toString();
+
+                    Authorization auth = client.target("http://localhost:8080" + "/auth/authorization").request().post(Entity.json(authJson), Authorization.class);
+
+                    log.debug("Auth = "+auth.getValidationId());
+
+
                     // Validation Body
 
                     String jsonString = new JSONObject()
@@ -62,9 +66,11 @@ public class MetricsGenerator implements Runnable {
                             //.put("JSON3", new JSONObject().put("key1", "value1"))
                             .toString();
 
+                    log.info("Using this body to validate payment: "+jsonString);
+
                     String result2 = client.target("http://localhost:8080" + "/auth/validation").request().post(Entity.json(jsonString), String.class);
 
-                    log.debug("validation completed: " + result);
+                    log.info("validation completed: " + result2);
                 }
 
             }catch (Exception e){
