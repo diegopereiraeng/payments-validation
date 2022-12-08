@@ -11,7 +11,7 @@ mongo:
   connectionString: "mongodb://user-admin:WXEhbndAZ9EudZE5@ac-ijeidwm-shard-00-00.nu8lzsv.mongodb.net:27017,ac-ijeidwm-shard-00-01.nu8lzsv.mongodb.net:27017,ac-ijeidwm-shard-00-02.nu8lzsv.mongodb.net:27017/?ssl=true&replicaSet=atlas-v4nhkq-shard-0&authSource=admin&retryWrites=true&w=majority"
 
 swagger:
-  basePath: /validation
+  basePath: /auth
   resourcePackage: io.harness.payments
   scan: true
   info:
