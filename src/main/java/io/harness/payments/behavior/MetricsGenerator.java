@@ -97,7 +97,8 @@ public class MetricsGenerator implements Runnable {
             /**
              * Define you target on which you would like to evaluate the featureFlag
              */
-            int calls_per_minute = 60;
+            int calls_per_minute = 100;
+
 
             for (int i = 0; i < calls_per_minute; i++) {
                 //long startTime = System.nanoTime();
