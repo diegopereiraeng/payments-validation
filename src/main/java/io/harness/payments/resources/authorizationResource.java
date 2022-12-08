@@ -76,7 +76,7 @@ public class authorizationResource {
 
         invoice.setValidationID(authorization);
 
-        if (paymentValidation.authorize(invoice) ){
+        if (paymentValidation.authorize(invoice) != null ){
 
             log.debug("authorization generated");
             return Response.status(HttpStatus.OK_200).

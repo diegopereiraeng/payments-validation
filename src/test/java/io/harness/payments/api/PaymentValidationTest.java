@@ -4,11 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.util.ajax.JSON;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
 
 import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -28,6 +32,7 @@ public class PaymentValidationTest {
 
     private SecureRandom r = new SecureRandom();
 
+    Client client = ClientBuilder.newClient();
 
     @Before
     public void setUp() throws Exception {
@@ -93,7 +98,6 @@ public class PaymentValidationTest {
         }catch (Exception e){
             invoice = new Payment(3);
         }
-
 
         assertEquals("verified", invoice.getStatus());
 

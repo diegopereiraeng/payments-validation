@@ -114,12 +114,17 @@ public abstract class PaymentValidation {
 
     }
 
-    public boolean authorize(Payment invoice){
+    public Authorization authorize(Payment invoice){
 
-        boolean accepted = mongodb.authorize(invoice.getId());
+        Authorization accepted = mongodb.authorize(invoice.getId());
+
+        if (accepted == null){
+            accepted = new Authorization(invoice.getId());
+            accepted.setErrorMsg("ERROR [Authorization] - Mongodb");
+        }
 
         //log.info("Diego");
-
+        accepted.setVersion(getVersion());
         return accepted;
     }
 
@@ -170,7 +175,7 @@ public abstract class PaymentValidation {
                     throw new RuntimeException(e);
                 }
 
-                if (authorize(invoice)){
+                if (authorize(invoice) != null){
                     log.debug("authorized");
                     invoice.setStatus("authorized");
                     return invoice;

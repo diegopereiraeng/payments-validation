@@ -13,6 +13,7 @@ public class Payment implements Serializable {
 
     private String errorMsg;
 
+
     public Payment() {
         // Jackson deserialization
     }
@@ -22,6 +23,7 @@ public class Payment implements Serializable {
         this.status = "not-verified";
         this.validationID = "";
         this.errorMsg = "";
+
     }
 
     @JsonProperty
@@ -33,6 +35,8 @@ public class Payment implements Serializable {
     public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
     }
+
+
 
     @JsonProperty
     public long getId() {

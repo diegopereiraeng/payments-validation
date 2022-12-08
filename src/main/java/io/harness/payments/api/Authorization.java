@@ -1,6 +1,7 @@
 package io.harness.payments.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class Authorization {
     @NotNull
     private String errorMsg;
 
+    private String version;
 
     public Authorization(){
 
@@ -30,11 +32,30 @@ public class Authorization {
     public Authorization(long invoiceId){
         this.invoiceId = invoiceId;
         this.errorMsg = "";
+        this.version = "stable";
     }
 
-//    public String getId(){
-//        return id;
-//    }
+
+    @JsonProperty
+    public String getVersion() {
+        return version;
+    }
+
+    @JsonProperty
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    @JsonProperty
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    @JsonProperty
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
 
     public String getValidationId(){
         return validationId;

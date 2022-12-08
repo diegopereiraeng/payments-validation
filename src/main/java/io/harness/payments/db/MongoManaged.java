@@ -12,6 +12,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import io.harness.payments.api.Payment;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -88,19 +89,19 @@ public class MongoManaged implements Managed {
 
     }
 
-    public boolean authorize(long invoiceId){
+    public Authorization authorize(long invoiceId){
 
         log.info("Authorizing: "+invoiceId);
         MongoCollection<Authorization> collection = this.db.getCollection("auth", Authorization.class);
         Authorization auth = collection.find(eq("invoiceId", invoiceId)).first();
 
         if (auth == null){
-            return false;
+            return null;
         }
 
         collection.deleteOne(Filters.eq("invoiceId", invoiceId));
 
-        return true;
+        return auth;
     }
 
     public Authorization getAuthorization(long invoiceId){
