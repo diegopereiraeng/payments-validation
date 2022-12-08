@@ -74,6 +74,15 @@ public class authorizationResource {
 
         String authorization = paymentValidation.getAuthorization(invoice.getId());
 
+        if (authorization == null){
+            log.info("authorization failed");
+            invoice.setErrorMsg("authorization failed - could not get an authorization");
+            invoice.setStatus("failed");
+
+            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).
+                    entity(new Representation<Payment>(HttpStatus.INTERNAL_SERVER_ERROR_500, invoice)).type("application/json").build();
+        }
+
         invoice.setValidationID(authorization);
 
         if (paymentValidation.authorize(invoice) != null ){
@@ -84,7 +93,8 @@ public class authorizationResource {
 
         }else {
             log.info("authorization failed");
-
+            invoice.setErrorMsg("authorization failed - invoice id: "+invoice.getId()+" couldn't be validated");
+            invoice.setStatus("failed");
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).
                     entity(new Representation<Payment>(HttpStatus.INTERNAL_SERVER_ERROR_500, invoice)).type("application/json").build();
             //throw new InternalServerErrorException(validatedPayment);

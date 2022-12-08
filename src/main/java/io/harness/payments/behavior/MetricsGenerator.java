@@ -57,6 +57,7 @@ public class MetricsGenerator implements Runnable {
                     log.debug("Auth = "+auth.getValidationId());
 
 
+
                     // Validation Body
 
                     String jsonString = new JSONObject()

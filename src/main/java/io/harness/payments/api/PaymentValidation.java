@@ -141,7 +141,13 @@ public abstract class PaymentValidation {
 
         log.debug("beta feature is "+this.betaFeature);
 
-        if (enableAuthorization && !(invoice.getValidationID().equals("")) && !(invoice.getValidationID().equals("load"))){
+        String validationID = invoice.getValidationID();
+
+        if (validationID == null){
+            validationID = "";
+        }
+
+        if (enableAuthorization && !(validationID.equals("")) && !(validationID.equals("load"))){
 
             log.info("[Payment Validation] Authorizing id: '"+invoice.getValidationID()+"'");
             String errorMsg = "";
