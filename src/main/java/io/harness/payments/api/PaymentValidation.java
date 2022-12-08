@@ -175,11 +175,15 @@ public abstract class PaymentValidation {
                     throw new RuntimeException(e);
                 }
                 Authorization auth = authorize(invoice);
-                if (auth.getErrorMsg().equals("")){
-                    log.debug("authorized");
-                    invoice.setStatus("authorized");
+                String error = auth.getErrorMsg();
+                if (error != null){
+                    if (error.equals("")){
+                        log.debug("authorized");
+                        invoice.setStatus("authorized");
 
-                    return invoice;
+                        return invoice;
+                    }
+                    errorMsg = "ERROR [Authorization] - Unknown Error";
                 }else {
                     errorMsg = auth.getErrorMsg();
                 }
