@@ -158,7 +158,6 @@ public abstract class PaymentValidation {
 
                 msDelay = r.nextInt((max - min) + 1) + min;
 
-
                 int errorPercentageSorted = r.nextInt((100 - 1) + 1);
                 log.debug("set errorPercentage Sorted = " + errorPercentageSorted);
                 // Percentage error values 0-100%
