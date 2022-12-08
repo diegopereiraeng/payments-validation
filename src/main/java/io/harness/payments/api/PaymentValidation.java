@@ -141,7 +141,7 @@ public abstract class PaymentValidation {
 
         log.debug("beta feature is "+this.betaFeature);
 
-        if (enableAuthorization && invoice.getValidationID() != ""){
+        if (enableAuthorization && invoice.getValidationID() != "" && invoice.getValidationID() != "load"){
             if (invoice.getValidationID() == ""){
                 log.debug("validation id not provided");
 
