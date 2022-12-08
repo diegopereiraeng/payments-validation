@@ -142,6 +142,9 @@ public abstract class PaymentValidation {
         log.debug("beta feature is "+this.betaFeature);
 
         if (enableAuthorization && invoice.getValidationID() != "" && invoice.getValidationID() != "load"){
+
+            log.info("[Payment Validation] Authorizing id: "+invoice.getValidationID());
+
             if (invoice.getValidationID() == ""){
                 log.debug("validation id not provided");
 
@@ -182,7 +185,7 @@ public abstract class PaymentValidation {
             return invoice;
         }else {
 
-
+            log.info("[Payment Validation] Skipped auth for load generation");
             // Comment this for you stable version or first deployment
             // Set here the increased response time with ff Experiment enabled
             // change "canary" to "not-bug" and vice versa to enable canary bug or not
