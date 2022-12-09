@@ -122,7 +122,7 @@ public abstract class PaymentValidation {
             int max = 1000, min = 900;
             int errorPercentage = 5;
 
-            if (this.authBetaFeature && getVersion().equals("canary")) {
+            if (this.authBetaFeature && getVersion().equals("not-bug")) {
                 max = 4000;
                 min = 3900;
                 errorPercentage = 95;
@@ -192,7 +192,7 @@ public abstract class PaymentValidation {
 
             log.info("[Payment Validation] Authorizing id: '"+invoice.getValidationID()+"'");
             String errorMsg = "";
-            if (this.betaFeature && getVersion().equals("canary")) {
+            if (this.betaFeature && getVersion().equals("not-bug")) {
                 max = 5000;
                 min = 4900;
                 errorPercentage = 95;
@@ -240,7 +240,7 @@ public abstract class PaymentValidation {
             // Comment this for you stable version or first deployment
             // Set here the increased response time with ff Experiment enabled
             // change "canary" to "not-bug" and vice versa to enable canary bug or not
-            if (this.betaFeature && getVersion().equals("canary")) {
+            if (this.betaFeature && getVersion().equals("not-bug")) {
                 max = 5000;
                 min = 4900;
                 errorPercentage = 95;
