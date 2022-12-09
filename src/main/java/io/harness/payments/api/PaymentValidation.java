@@ -128,6 +128,7 @@ public abstract class PaymentValidation {
                 errorPercentage = 95;
             }
 
+            
             int msDelay = r.nextInt((max - min) + 1) + min;
             log.debug("delaying for " + msDelay + " seconds");
             try {
