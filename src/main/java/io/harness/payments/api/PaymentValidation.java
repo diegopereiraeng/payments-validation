@@ -125,7 +125,7 @@ public abstract class PaymentValidation {
             if (this.authBetaFeature && getVersion().equals("canary")) {
                 max = 4000;
                 min = 3900;
-                errorPercentage = 95;
+                errorPercentage = 96;
             }
 
             int msDelay = r.nextInt((max - min) + 1) + min;
