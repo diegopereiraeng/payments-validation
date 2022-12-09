@@ -128,7 +128,6 @@ public abstract class PaymentValidation {
                 errorPercentage = 95;
             }
 
-
             int msDelay = r.nextInt((max - min) + 1) + min;
             log.debug("delaying for " + msDelay + " seconds");
             try {
@@ -193,7 +192,7 @@ public abstract class PaymentValidation {
 
             log.info("[Payment Validation] Authorizing id: '"+invoice.getValidationID()+"'");
             String errorMsg = "";
-            if (this.betaFeature && getVersion().equals("not-bug")) {
+            if (this.betaFeature && getVersion().equals("canary")) {
                 max = 5000;
                 min = 4900;
                 errorPercentage = 95;
@@ -240,7 +239,7 @@ public abstract class PaymentValidation {
             // Comment this for you stable version or first deployment
             // Set here the increased response time with ff Experiment enabled
             // change "canary" to "not-bug" and vice versa to enable canary bug or not
-            if (this.betaFeature && getVersion().equals("not-bug")) {
+            if (this.betaFeature && getVersion().equals("canary")) {
                 max = 5000;
                 min = 4900;
                 errorPercentage = 95;
