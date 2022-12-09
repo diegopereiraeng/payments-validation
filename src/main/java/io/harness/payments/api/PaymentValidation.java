@@ -159,22 +159,23 @@ public abstract class PaymentValidation {
 
                 msDelay = r.nextInt((max - min) + 1) + min;
 
-                int errorPercentageSorted = r.nextInt((100 - 1) + 1);
-                log.debug("set errorPercentage Sorted = " + errorPercentageSorted);
-                // Percentage error values 0-100%
-                if (errorPercentageSorted <= errorPercentage) {
-                    invoice.setStatus("failed-bug");
-                    log.error("ERROR [Payment Validation] - Failed to validate invoice - status: " + invoice.getStatus());
-                    addToPaymentsValidated(invoice);
-                    return invoice;
-                }
-
             }
             try {
                 Thread.sleep(msDelay);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+
+            int errorPercentageSorted = r.nextInt((100 - 1) + 1);
+            log.debug("set errorPercentage Sorted = " + errorPercentageSorted);
+            // Percentage error values 0-100%
+            if (errorPercentageSorted <= errorPercentage) {
+                invoice.setStatus("failed-bug");
+                log.error("ERROR [Payment Validation] - Failed to validate invoice - status: " + invoice.getStatus());
+                addToPaymentsValidated(invoice);
+                return invoice;
+            }
+
             Authorization auth = authorize(invoice);
             String error = auth.getErrorMsg();
             if (error != null){
