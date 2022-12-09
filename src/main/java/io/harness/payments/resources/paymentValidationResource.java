@@ -178,9 +178,9 @@ public class paymentValidationResource {
         log.debug(target.getName()+ " Beta Feature is : "+result);
 
         if (result){
-            //paymentValidation.setBetaFeature();
+            paymentValidation.setAuthBetaFeature();
         }else {
-            //paymentValidation.disableBetaFeature();
+            paymentValidation.disableAuthBetaFeature();
         }
 
         String authorization = paymentValidation.getAuthorization(invoice.getId());
@@ -191,28 +191,7 @@ public class paymentValidationResource {
 
             log.debug("authorization generated");
 
-            // Set here the Max and Min Response Time with FF Experiment Disabled
-            int max = 1000, min = 900;
-            int errorPercentage = 5;
 
-            int msDelay = r.nextInt((max - min) + 1) + min;
-            log.debug("delaying for " + msDelay + " seconds");
-            try {
-                Thread.sleep(msDelay);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            int errorPercentageSorted = r.nextInt((100 - 1) + 1);
-            log.debug("set errorPercentage Sorted = " + errorPercentageSorted);
-            // Percentage error values 0-100%
-            if (errorPercentageSorted <= errorPercentage) {
-                invoice.setStatus("failed-bug-"+getVersion());
-                invoice.setErrorMsg("Bug Demo - version: "+getVersion());
-                log.error("ERROR [Authorization Failed] - Failed to authorize invoice - error: " + invoice.getErrorMsg());
-
-                return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).
-                        entity(new Representation<Payment>(HttpStatus.INTERNAL_SERVER_ERROR_500, invoice)).type("application/json").build();
-            }
 
             return Response.status(HttpStatus.OK_200).
                     entity(new Representation<Payment>(HttpStatus.OK_200, invoice)).type("application/json").build();

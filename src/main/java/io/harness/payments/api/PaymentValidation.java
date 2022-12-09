@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.harness.payments.db.MongoManaged;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.jetty.http.HttpStatus;
 
+import javax.ws.rs.core.Response;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.SecureRandom;
@@ -38,6 +40,16 @@ public abstract class PaymentValidation {
     private boolean authorizationLock = false;
 
     private boolean betaFeature = false;
+
+    private boolean authBetaFeature = false;
+
+    public void setAuthBetaFeature(){
+        this.authBetaFeature = true;
+    }
+
+    public void disableAuthBetaFeature(){
+        this.authBetaFeature = false;
+    }
 
     public void setBetaFeature(){
         this.betaFeature = true;
@@ -105,6 +117,36 @@ public abstract class PaymentValidation {
         Authorization auth;
         log.info("Getting Authorization for invoiceID: "+invoiceID);
         try {
+
+            // Set here the Max and Min Response Time with FF Experiment Disabled
+            int max = 1000, min = 900;
+            int errorPercentage = 5;
+
+            if (this.authBetaFeature && getVersion().equals("canary")) {
+                max = 4000;
+                min = 3900;
+                errorPercentage = 95;
+            }
+
+
+            int msDelay = r.nextInt((max - min) + 1) + min;
+            log.debug("delaying for " + msDelay + " seconds");
+            try {
+                Thread.sleep(msDelay);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            int errorPercentageSorted = r.nextInt((100 - 1) + 1);
+            log.debug("set errorPercentage Sorted = " + errorPercentageSorted);
+            // Percentage error values 0-100%
+            if (errorPercentageSorted <= errorPercentage) {
+
+                log.error("ERROR [Authorization Failed] - Failed to authorize invoice : " + invoiceID);
+
+                return null;
+            }
+
+
             auth = mongodb.getAuthorization(invoiceID);
             return auth.getValidationId();
         }catch (Exception e){
