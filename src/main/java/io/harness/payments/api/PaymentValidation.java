@@ -155,7 +155,8 @@ public abstract class PaymentValidation {
                 max = 5000;
                 min = 4900;
                 errorPercentage = 95;
-                
+
+
                 msDelay = r.nextInt((max - min) + 1) + min;
 
                 int errorPercentageSorted = r.nextInt((100 - 1) + 1);
