@@ -13,6 +13,8 @@ public class Payment implements Serializable {
 
     private String errorMsg;
 
+    private String version;
+
 
     public Payment() {
         // Jackson deserialization
@@ -24,6 +26,16 @@ public class Payment implements Serializable {
         this.validationID = "";
         this.errorMsg = "";
 
+    }
+
+    @JsonProperty
+    public String getVersion() {
+        return version;
+    }
+
+    @JsonProperty
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     @JsonProperty

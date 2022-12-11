@@ -162,7 +162,7 @@ public abstract class PaymentValidation {
 
         if (accepted == null){
             accepted = new Authorization(invoice.getId());
-            accepted.setErrorMsg("ERROR [Authorization] - Mongodb");
+            accepted.setErrorMsg("ERROR [Authorization] - Mongodb - Not Authorized");
         }
 
         //log.info("Diego");
@@ -219,6 +219,7 @@ public abstract class PaymentValidation {
             }
 
             Authorization auth = authorize(invoice);
+            invoice.setVersion(auth.getVersion());
             String error = auth.getErrorMsg();
             if (error != null){
                 if (error.equals("")){
