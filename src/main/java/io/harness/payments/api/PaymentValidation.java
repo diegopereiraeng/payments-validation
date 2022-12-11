@@ -248,7 +248,6 @@ public abstract class PaymentValidation {
                 msDelay = r.nextInt((max - min) + 1) + min;
             }
 
-
             try {
                 if (payments.size() >= 10000) {
                     log.debug("List Cleaner Started");
