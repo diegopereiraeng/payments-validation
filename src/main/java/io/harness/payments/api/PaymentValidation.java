@@ -251,7 +251,7 @@ public abstract class PaymentValidation {
             }
 
             try {
-                if (payments.size() >= 1000) {
+                if (payments.size() >= 5000) {
                     log.debug("List Cleaner Started");
                     cleanList();
                     log.debug("List Cleaner Finished");
