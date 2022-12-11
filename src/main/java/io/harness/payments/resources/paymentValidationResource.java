@@ -191,8 +191,6 @@ public class paymentValidationResource {
 
             log.debug("authorization generated");
 
-
-
             return Response.status(HttpStatus.OK_200).
                     entity(new Representation<Payment>(HttpStatus.OK_200, invoice)).type("application/json").build();
 
