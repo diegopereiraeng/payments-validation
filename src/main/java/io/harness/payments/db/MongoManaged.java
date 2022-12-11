@@ -85,8 +85,6 @@ public class MongoManaged implements Managed {
 //            System.out.println("Diego "+auth.getInvoiceId());
 //        }
 
-
-
     }
 
     public Authorization authorize(long invoiceId){
