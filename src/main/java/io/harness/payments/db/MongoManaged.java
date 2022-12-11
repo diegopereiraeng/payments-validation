@@ -91,7 +91,7 @@ public class MongoManaged implements Managed {
 
     public Authorization authorize(long invoiceId){
 
-        log.info("Authorizing: "+invoiceId);
+        log.debug("Authorizing: "+invoiceId);
         MongoCollection<Authorization> collection = this.db.getCollection("auth", Authorization.class);
         Authorization auth = collection.find(eq("invoiceId", invoiceId)).first();
 
@@ -106,12 +106,12 @@ public class MongoManaged implements Managed {
 
     public Authorization getAuthorization(long invoiceId){
         Authorization auth;
-        log.info("Getting Authorization for invoiceID: "+invoiceId);
+        log.debug("Getting Authorization for invoiceID: "+invoiceId);
         try {
             MongoCollection<Authorization> collection = this.db.getCollection("auth", Authorization.class);
             auth = new Authorization(invoiceId);
             InsertOneResult result = collection.insertOne(auth);
-            log.info("Diego "+result.getInsertedId().toString());
+            log.debug("Diego "+result.getInsertedId().toString());
             return auth;
         }catch (Exception e){
             return null;

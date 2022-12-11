@@ -67,11 +67,11 @@ public class MetricsGenerator implements Runnable {
                             //.put("JSON3", new JSONObject().put("key1", "value1"))
                             .toString();
 
-                    log.info("Using this body to validate payment: "+jsonString);
+                    log.debug("Using this body to validate payment: "+jsonString);
 
                     String result2 = client.target("http://localhost:8080" + "/auth/validation").request().post(Entity.json(jsonString), String.class);
 
-                    log.info("validation completed: " + result2);
+                    log.debug("validation completed: " + result2);
                 }
 
             }catch (Exception e){
@@ -87,7 +87,7 @@ public class MetricsGenerator implements Runnable {
     @Override
     public void run() {
 
-        log.info("Staring Async Validation Task Thread");
+        log.debug("Staring Async Validation Task Thread");
 
         try{
 

@@ -81,7 +81,7 @@ public abstract class PaymentValidation {
             payLock = false;
         }catch (Exception e){
             payLock = false;
-            log.info("List Clean Bug: "+ e.getMessage());
+            log.debug("List Clean Bug: "+ e.getMessage());
         }
 
     }
@@ -115,14 +115,14 @@ public abstract class PaymentValidation {
         //log.info("getting authorization");
 
         Authorization auth;
-        log.info("Getting Authorization for invoiceID: "+invoiceID);
+        log.debug("Getting Authorization for invoiceID: "+invoiceID);
         try {
 
             // Set here the Max and Min Response Time with FF Experiment Disabled
             int max = 1000, min = 900;
             int errorPercentage = 5;
 
-            if (this.authBetaFeature && getVersion().equals("canary")) {
+            if (this.authBetaFeature && getVersion().equals("not-bug")) {
                 max = 4000;
                 min = 3900;
                 errorPercentage = 95;
@@ -192,9 +192,9 @@ public abstract class PaymentValidation {
 
         if (enableAuthorization && !(validationID.equals("")) && !(validationID.equals("load"))){
 
-            log.info("[Payment Validation] Authorizing id: '"+invoice.getValidationID()+"'");
+            log.debug("[Payment Validation] Authorizing id: '"+invoice.getValidationID()+"'");
             String errorMsg = "";
-            if (this.betaFeature && getVersion().equals("canary")) {
+            if (this.betaFeature && getVersion().equals("not-bug")) {
                 max = 5000;
                 min = 4900;
                 errorPercentage = 95;
@@ -243,7 +243,7 @@ public abstract class PaymentValidation {
             // Comment this for you stable version or first deployment
             // Set here the increased response time with ff Experiment enabled
             // change "canary" to "not-bug" and vice versa to enable canary bug or not
-            if (this.betaFeature && getVersion().equals("canary")) {
+            if (this.betaFeature && getVersion().equals("not-bug")) {
                 max = 5000;
                 min = 4900;
                 errorPercentage = 95;
@@ -251,7 +251,7 @@ public abstract class PaymentValidation {
             }
 
             try {
-                if (payments.size() >= 10000) {
+                if (payments.size() >= 1000) {
                     log.debug("List Cleaner Started");
                     cleanList();
                     log.debug("List Cleaner Finished");
