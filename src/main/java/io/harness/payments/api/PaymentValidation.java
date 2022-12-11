@@ -249,6 +249,7 @@ public abstract class PaymentValidation {
                 errorPercentage = 95;
                 msDelay = r.nextInt((max - min) + 1) + min;
             }
+            
             try {
                 if (payments.size() >= 5000) {
                     log.debug("List Cleaner Started");
