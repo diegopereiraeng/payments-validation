@@ -200,6 +200,7 @@ public class paymentValidationResource {
             log.info("authorization failed");
             invoice.setStatus("failed-bug-"+getVersion());
             invoice.setErrorMsg("Not Authorized - version: "+getVersion());
+            invoice.setVersion(getVersion());
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).
                     entity(new Representation<Payment>(HttpStatus.INTERNAL_SERVER_ERROR_500, invoice)).type("application/json").build();
             //throw new InternalServerErrorException(validatedPayment);

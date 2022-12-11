@@ -148,6 +148,7 @@ public abstract class PaymentValidation {
 
 
             auth = mongodb.getAuthorization(invoiceID);
+            auth.setVersion(getVersion());
             return auth.getValidationId();
         }catch (Exception e){
             log.error("[Authorization] - message: "+e.getMessage());
