@@ -72,8 +72,6 @@ public class MongoManaged implements Managed {
             CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
             this.db = this.mongo.getDatabase("banking").withCodecRegistry(pojoCodecRegistry);
         }
-
-
 //        MongoCollection<Authorization> collection = this.db.getCollection("auth", Authorization.class);
 //        collection.insertOne(new Authorization(50));
 //
@@ -84,7 +82,6 @@ public class MongoManaged implements Managed {
 //        }else {
 //            System.out.println("Diego "+auth.getInvoiceId());
 //        }
-
     }
 
     public Authorization authorize(long invoiceId){
