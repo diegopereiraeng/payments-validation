@@ -5,8 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.util.ajax.JSON;
 import org.json.JSONObject;
+
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 
 import javax.ws.rs.InternalServerErrorException;

@@ -30,6 +30,9 @@ public class Payment implements Serializable {
 
     @JsonProperty
     public String getVersion() {
+        if (version == null){
+            return "";
+        }
         return version;
     }
 
