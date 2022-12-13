@@ -3,8 +3,8 @@ package io.harness.payments;
 import io.dropwizard.Configuration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
-import org.hibernate.validator.constraints.*;
+import io.github.tranchitam.dropwizard.swagger.configurations.SwaggerBundleConfiguration;
+
 import javax.validation.constraints.*;
 import javax.validation.constraints.NotEmpty;
 
@@ -29,6 +29,11 @@ public class scanPayConfiguration extends Configuration {
     @JsonProperty
     public String getTemplate() {
         return template;
+    }
+
+    @JsonProperty
+    public SwaggerBundleConfiguration getSwaggerBundleConfiguration() {
+        return swaggerBundleConfiguration;
     }
 
     @JsonProperty

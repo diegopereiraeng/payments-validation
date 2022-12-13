@@ -11,15 +11,13 @@ mongo:
   connectionString: "mongodb://user-admin:WXEhbndAZ9EudZE5@ac-ijeidwm-shard-00-00.nu8lzsv.mongodb.net:27017,ac-ijeidwm-shard-00-01.nu8lzsv.mongodb.net:27017,ac-ijeidwm-shard-00-02.nu8lzsv.mongodb.net:27017/?ssl=true&replicaSet=atlas-v4nhkq-shard-0&authSource=admin&retryWrites=true&w=majority"
 
 swagger:
-  basePath: /auth
-  resourcePackage: io.harness.payments
-  scan: true
-  info:
-    version: "1.0.0"
-    title: "Payments Validation API Doc"
-    description: "A simple API used for expose some operation on MongoDB collection"
-    termsOfService: "http://swagger.io/terms/"
-    contact:
-      name: "Payments Validation API"
-    license:
-      name: "Diego Pereira"
+  resourcePackage:
+    - io.harness.payments.resources
+  version: "1.0.0"
+  title: "Payments Auth Validation API Doc"
+  description: "A simple API used for expose some operation on MongoDB collection"
+  termsOfService: "http://swagger.io/terms/"
+  contactEmail: diego.pereira@harness.io
+  contactUrl: https://github.com/diegopereiraeng
+  swaggerView:
+    title: Payments Auth Validation API Doc
