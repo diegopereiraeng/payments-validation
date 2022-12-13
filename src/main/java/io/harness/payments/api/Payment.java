@@ -77,4 +77,14 @@ public class Payment implements Serializable {
         return validationID;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Payment pay = (Payment) obj;
+        boolean result = false;
+        if (pay.getId() == this.getId() && pay.getStatus().equals(this.getStatus()) && pay.getErrorMsg().equals(this.getErrorMsg()) && pay.getVersion().equals(this.getVersion())){
+            result = true;
+        }
+
+        return result;
+    }
 }
