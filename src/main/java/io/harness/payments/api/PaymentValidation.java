@@ -238,7 +238,6 @@ public abstract class PaymentValidation {
             return invoice;
         }else {
 
-
             log.debug("[Payment Validation] Skipped auth for load generation");
             // Comment this for you stable version or first deployment
             // Set here the increased response time with ff Experiment enabled
