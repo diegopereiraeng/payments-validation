@@ -7,6 +7,7 @@ How to start the scanPay application
 1. Start application with `java -jar target/scanPay-1.0-SNAPSHOT.jar server config.yml`
 1. To check that your application is running enter url `http://localhost:8080`
 
+
 Health Check
 ---
 
