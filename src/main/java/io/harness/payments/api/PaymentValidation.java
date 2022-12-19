@@ -30,99 +30,99 @@ public abstract class PaymentValidation {
         }
     }
 
-    .equals("not-bug"List<Payment> payments =  new ArrayList<Payment>();
+    List<Payment> payments =  new ArrayList<Payment>();
 
-            private Map<Double, Long> authorizations
-                    = new ConcurrentHashMap<Double, Long>();
+    private Map<Double, Long> authorizations
+            = new ConcurrentHashMap<Double, Long>();
 
-            private boolean payLock = false;
+    private boolean payLock = false;
 
-            private boolean authorizationLock = false;
+    private boolean authorizationLock = false;
 
-            private boolean betaFeature = false;
+    private boolean betaFeature = false;
 
-            private boolean authBetaFeature = false;
+    private boolean authBetaFeature = false;
 
-            public void setAuthBetaFeature(){
-                this.authBetaFeature = true;
+    public void setAuthBetaFeature(){
+        this.authBetaFeature = true;
+    }
+
+    public void disableAuthBetaFeature(){
+        this.authBetaFeature = false;
+    }
+
+    public void setBetaFeature(){
+        this.betaFeature = true;
+    }
+
+    public void disableBetaFeature(){
+        this.betaFeature = false;
+    }
+
+    private boolean enableAuthorization = true;
+
+    private SecureRandom r = new SecureRandom();
+
+    private void cleanList(){
+        while (payLock)
+        {
+            log.debug("Waiting for Thread Unlock");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                log.error("Thread Safe Error: "+e.getMessage());
+                break;
             }
+        }
+        try{
+            payLock = true;
+            List<Payment> newList = payments.subList(10,payments.size()-1);
+            this.payments.removeAll(newList);
+            payLock = false;
+        }catch (Exception e){
+            payLock = false;
+            log.debug("List Clean Bug: "+ e.getMessage());
+        }
 
-            public void disableAuthBetaFeature(){
-                this.authBetaFeature = false;
+    }
+
+    private void addToPaymentsValidated(Payment payment){
+        while (payLock)
+        {
+            log.debug("Waiting for Thread Unlock");
+            try {
+                Thread.sleep(100);
+
+            } catch (InterruptedException e) {
+                log.error("Thread Safe Error: "+e.getMessage());
+                payLock = false;
+                break;
             }
+        }
+        try{
+            payLock = true;
+            payments.add(payment);
+            payLock = false;
+        }catch (Exception e){
+            payLock = false;
+            log.info("Concurrency Bug: "+ e.getMessage());
+        }
 
-            public void setBetaFeature(){
-                this.betaFeature = true;
-            }
+    };
 
-            public void disableBetaFeature(){
-                this.betaFeature = false;
-            }
+    public String getAuthorization(long invoiceID){
 
-            private boolean enableAuthorization = true;
+        //log.info("getting authorization");
 
-            private SecureRandom r = new SecureRandom();
+        Authorization auth;
+        log.debug("Getting Authorization for invoiceID: "+invoiceID);
+        try {
 
-            private void cleanList(){
-                while (payLock)
-                {
-                    log.debug("Waiting for Thread Unlock");
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        log.error("Thread Safe Error: "+e.getMessage());
-                        break;
-                    }
-                }
-                try{
-                    payLock = true;
-                    List<Payment> newList = payments.subList(10,payments.size()-1);
-                    this.payments.removeAll(newList);
-                    payLock = false;
-                }catch (Exception e){
-                    payLock = false;
-                    log.debug("List Clean Bug: "+ e.getMessage());
-                }
+            // Set here the Max and Min Response Time with FF Experiment Disabled
+            int max = 1000, min = 900;
+            int errorPercentage = 5;
 
-            }
-
-            private void addToPaymentsValidated(Payment payment){
-                while (payLock)
-                {
-                    log.debug("Waiting for Thread Unlock");
-                    try {
-                        Thread.sleep(100);
-
-                    } catch (InterruptedException e) {
-                        log.error("Thread Safe Error: "+e.getMessage());
-                        payLock = false;
-                        break;
-                    }
-                }
-                try{
-                    payLock = true;
-                    payments.add(payment);
-                    payLock = false;
-                }catch (Exception e){
-                    payLock = false;
-                    log.info("Concurrency Bug: "+ e.getMessage());
-                }
-
-            };
-
-            public String getAuthorization(long invoiceID){
-
-                //log.info("getting authorization");
-
-                Authorization auth;
-                log.debug("Getting Authorization for invoiceID: "+invoiceID);
-                try {
-
-                    // Set here the Max and Min Response Time with FF Experiment Disabled
-                    int max = 1000, min = 900;
-                    int errorPercentage = 5;
-
-                    if (this.authBetaFeature && getVersion())) {
+            if (this.authBetaFeature && getVersion().equals("canary")) {
                 max = 4000;
                 min = 3900;
                 errorPercentage = 95;
