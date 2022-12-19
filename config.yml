@@ -8,7 +8,7 @@ logging:
 
 
 mongo:
-  connectionString: "mongodb://admin:harnessbankingdemo@mongo-replicaset-0.mongo-replicaset-svc.prod.svc.cluster.local:27017,mongo-replicaset-1.mongo-replicaset-svc.prod.svc.cluster.local:27017,mongo-replicaset-2.mongo-replicaset-svc.prod.svc.cluster.local:27017/admin?ssl=true"
+  connectionString: ""
 
 swagger:
   basePath: /auth
