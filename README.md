@@ -1,4 +1,4 @@
-# scanPay
+# scanPay test
 
 How to start the scanPay application
 ---
