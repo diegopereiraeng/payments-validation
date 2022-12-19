@@ -28,6 +28,15 @@ public class Payment implements Serializable {
 
     }
 
+    public Payment(Payment payment) {
+        this.id = payment.id;
+        this.status = payment.status;
+        this.validationID = payment.validationID;
+        this.errorMsg = payment.validationID;
+
+    }
+
+
     @JsonProperty
     public String getVersion() {
         if (version == null){
