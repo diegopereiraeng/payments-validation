@@ -28,8 +28,20 @@ public class Payment implements Serializable {
 
     }
 
+    public Payment(Payment payment) {
+        this.id = payment.id;
+        this.status = payment.status;
+        this.validationID = payment.validationID;
+        this.errorMsg = payment.validationID;
+
+    }
+
+
     @JsonProperty
     public String getVersion() {
+        if (version == null){
+            return "";
+        }
         return version;
     }
 
@@ -77,4 +89,14 @@ public class Payment implements Serializable {
         return validationID;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Payment pay = (Payment) obj;
+        boolean result = false;
+        if (pay.getId() == this.getId() && pay.getStatus().equals(this.getStatus()) && pay.getErrorMsg().equals(this.getErrorMsg()) && pay.getVersion().equals(this.getVersion())){
+            result = true;
+        }
+
+        return result;
+    }
 }

@@ -7,6 +7,8 @@ import com.mongodb.client.MongoIterable;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.github.tranchitam.dropwizard.swagger.bundles.SwaggerBundle;
+import io.github.tranchitam.dropwizard.swagger.configurations.SwaggerBundleConfiguration;
 import io.harness.cf.client.api.BaseConfig;
 import io.harness.cf.client.api.CfClient;
 import io.harness.cf.client.api.FeatureFlagInitializeException;
@@ -59,6 +61,13 @@ public class scanPayApplication extends Application<scanPayConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<scanPayConfiguration> bootstrap) {
+
+        bootstrap.addBundle(new SwaggerBundle<scanPayConfiguration>() {
+            @Override
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(scanPayConfiguration configuration) {
+                return configuration.getSwaggerBundleConfiguration();
+            }
+        });
         bootstrap.addBundle(new MicrometerBundle());
     }
 
