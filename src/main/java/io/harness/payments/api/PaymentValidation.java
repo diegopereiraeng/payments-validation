@@ -118,6 +118,7 @@ public abstract class PaymentValidation {
         log.debug("Getting Authorization for invoiceID: "+invoiceID);
         try {
 
+            
             // Set here the Max and Min Response Time with FF Experiment Disabled
             int max = 1000, min = 900;
             int errorPercentage = 5;
