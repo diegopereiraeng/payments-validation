@@ -244,7 +244,7 @@ public abstract class PaymentValidation {
             // change "canary" to "not-bug" and vice versa to enable canary bug or not
             if (this.betaFeature && getVersion().equals("canary")) {
                 max = 5000;
-                min = 4900;
+                min = 4800;
                 errorPercentage = 95;
                 msDelay = r.nextInt((max - min) + 1) + min;
             }
