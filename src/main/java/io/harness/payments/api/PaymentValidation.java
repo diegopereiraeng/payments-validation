@@ -91,7 +91,7 @@ public abstract class PaymentValidation {
         {
             log.debug("Waiting for Thread Unlock");
             try {
-                Thread.sleep(100);
+                Thread.sleep(200);
 
             } catch (InterruptedException e) {
                 log.error("Thread Safe Error: "+e.getMessage());
@@ -174,7 +174,7 @@ public abstract class PaymentValidation {
     public Payment validate(Payment invoice){
 
         // Set here the Max and Min Response Time with FF Experiment Disabled
-        int max = 700, min = 500;
+        int max = 700, min = 600;
         int msDelay = r.nextInt((max - min) + 1) + min;
 
         // Set percentage Error with FF Experiment Disabled
