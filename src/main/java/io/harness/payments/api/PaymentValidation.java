@@ -87,11 +87,12 @@ public abstract class PaymentValidation {
     }
 
     private void addToPaymentsValidated(Payment payment){
+        
         while (payLock)
         {
             log.debug("Waiting for Thread Unlock");
             try {
-                Thread.sleep(100);
+                Thread.sleep(200);
 
             } catch (InterruptedException e) {
                 log.error("Thread Safe Error: "+e.getMessage());
