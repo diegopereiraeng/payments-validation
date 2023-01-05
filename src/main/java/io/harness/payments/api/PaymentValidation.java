@@ -174,7 +174,7 @@ public abstract class PaymentValidation {
     public Payment validate(Payment invoice){
 
         // Set here the Max and Min Response Time with FF Experiment Disabled
-        int max = 1200, min = 1000;
+        int max = 700, min = 500;
         int msDelay = r.nextInt((max - min) + 1) + min;
 
         // Set percentage Error with FF Experiment Disabled
