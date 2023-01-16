@@ -1,5 +1,20 @@
 # scanPay
 
+How to Kick off a Harness Pipeline
+
+edit the file [PaymentValidation.java](https://github.com/diegopereiraeng/payments-validation/edit/master/src/main/java/io/harness/payments/api/PaymentValidation.java)
+
+go to the line: 177 
+```
+int max = 700, min = 500;
+```
+increase the max variable to 900
+like this:
+```
+int max = 900, min = 500;
+```
+then propose a PR
+
 How to start the scanPay application
 ---
 
