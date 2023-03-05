@@ -108,7 +108,7 @@ public class PaymentValidationTest {
     public void getPayments() {
         System.out.println("Unit Test getPayments");
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         }
         catch (InterruptedException ex) {
 

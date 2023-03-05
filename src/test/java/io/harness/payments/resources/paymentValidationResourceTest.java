@@ -43,14 +43,48 @@ import static org.mockito.Mockito.*;
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class paymentValidationResourceTest {
 
+
+
     @Path("/auth/validation")
     public static class paymentValidationResource {
+        private SecureRandom r = new SecureRandom();
+
         @GET
         public String listValidations(@QueryParam("id") Optional<String> id) {
             List<Payment> payments =  new ArrayList<Payment>();
             payments.add(new Payment(1));
             payments.add(new Payment(2));
             payments.add(new Payment(3));
+            try {
+                int max = 15000, min = 10000;
+
+
+
+                log.info("starting payment validation");
+
+                try {
+                    int msDelay = r.nextInt((max - min) + 1) + min;
+                    log.debug("delaying for "+msDelay+" seconds");
+                    Thread.sleep(msDelay);
+
+
+
+                } catch (InterruptedException e) {
+                    log.error("ERROR [Payment Validation] - Interruption Exception: "+e.getMessage());
+
+
+                }catch (Exception e){
+                    String errorMsg = e.getMessage();
+                    if (errorMsg == null){
+                        errorMsg = e.toString();
+                    }
+                    log.error("ERROR [Payment Validation] - Exception: "+errorMsg);
+
+                }
+            }
+            catch (Exception ex) {
+                log.error(ex.getMessage());
+            }
             return "pong";
         }
     }
