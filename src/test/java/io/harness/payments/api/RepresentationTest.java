@@ -80,4 +80,5 @@ public class RepresentationTest<T> {
         assertThat(representation.getData()).isEqualTo(array);
     }
 
+
 }

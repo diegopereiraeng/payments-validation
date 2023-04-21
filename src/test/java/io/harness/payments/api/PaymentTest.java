@@ -76,4 +76,5 @@ public class PaymentTest {
         assertThat(MAPPER.readValue(getClass().getResource("/fixtures/Payment.json"), Payment.class))
                 .isEqualTo(payment);
     }
+
 }

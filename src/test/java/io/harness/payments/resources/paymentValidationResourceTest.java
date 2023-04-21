@@ -98,5 +98,6 @@ public class paymentValidationResourceTest {
         final String response = new BufferedReader(new InputStreamReader(url.openStream())).readLine();
         assertEquals("pong", response);
     }
+    
 
 }

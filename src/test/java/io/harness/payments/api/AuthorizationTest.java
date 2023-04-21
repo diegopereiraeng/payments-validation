@@ -85,4 +85,5 @@ public class AuthorizationTest {
         Thread.sleep(120000); // wait for 2 minutes
         assertThat(true).isEqualTo(true);
     }
+    
 }
