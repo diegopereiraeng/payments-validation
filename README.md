@@ -4,14 +4,16 @@ How to Kick off a Harness Pipeline
 
 edit the file [PaymentValidation.java](https://github.com/diegopereiraeng/payments-validation/edit/master/src/main/java/io/harness/payments/api/PaymentValidation.java)
 
-go to the line: 177 
+go to the line: 126
 ```
-int max = 700, min = 500;
+max = 4000;
+min = 3900;
 ```
-increase the max variable to 900
+increase the max variable to 5000
 like this:
 ```
-int max = 900, min = 500;
+max = 5000;
+min = 3900;
 ```
 then propose a PR
 
