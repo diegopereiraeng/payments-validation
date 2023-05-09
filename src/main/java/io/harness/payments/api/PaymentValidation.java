@@ -68,7 +68,7 @@ public abstract class PaymentValidation {
         {
             log.debug("Waiting for Thread Unlock");
             try {
-                Thread.sleep(100);
+                Thread.sleep(110);
             } catch (InterruptedException e) {
                 log.error("Thread Safe Error: "+e.getMessage());
                 break;
@@ -91,7 +91,7 @@ public abstract class PaymentValidation {
         {
             log.debug("Waiting for Thread Unlock");
             try {
-                Thread.sleep(100);
+                Thread.sleep(110);
 
             } catch (InterruptedException e) {
                 log.error("Thread Safe Error: "+e.getMessage());
@@ -123,7 +123,7 @@ public abstract class PaymentValidation {
             int errorPercentage = 5;
 
             if (this.authBetaFeature && getVersion().equals("canary")) {
-                max = 4000;
+                max = 4200;
                 min = 3900;
                 errorPercentage = 95;
             }
@@ -161,6 +161,7 @@ public abstract class PaymentValidation {
 
         Authorization accepted = mongodb.authorize(invoice.getId());
 
+        
         if (accepted == null){
             accepted = new Authorization(invoice.getId());
             accepted.setErrorMsg("ERROR [Authorization] - Mongodb - Not Authorized");
@@ -196,7 +197,7 @@ public abstract class PaymentValidation {
             String errorMsg = "";
             if (this.betaFeature && getVersion().equals("canary")) {
                 max = 5000;
-                min = 4900;
+                min = 4000;
                 errorPercentage = 95;
 
 
