@@ -55,7 +55,7 @@ public class paymentValidationResourceTest {
             payments.add(new Payment(1));
             payments.add(new Payment(2));
             payments.add(new Payment(3));
-            log.error("ERROR ET Tracking Child")
+            log.error("ERROR ET Tracking Child");
             try {
                 int max = 15000, min = 10000;
 
@@ -95,7 +95,7 @@ public class paymentValidationResourceTest {
 
     @Test
     void listValidations() throws IOException {
-        log.error("ERROR ET Tracking Parent")
+        log.error("ERROR ET Tracking Parent");
         final URL url = new URL(EXT.baseUri() + "/auth/validation");
         final String response = new BufferedReader(new InputStreamReader(url.openStream())).readLine();
         assertEquals("pong", response);
