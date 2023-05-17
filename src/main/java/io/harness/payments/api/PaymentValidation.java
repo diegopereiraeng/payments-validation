@@ -123,7 +123,7 @@ public abstract class PaymentValidation {
             int errorPercentage = 5;
 
             if (this.authBetaFeature && getVersion().equals("canary")) {
-                max = 4000;
+                max = 5000;
                 min = 3900;
                 errorPercentage = 95;
             }
