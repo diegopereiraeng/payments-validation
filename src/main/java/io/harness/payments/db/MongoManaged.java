@@ -111,6 +111,7 @@ public class MongoManaged implements Managed {
             log.debug("Diego "+result.getInsertedId().toString());
             return auth;
         }catch (Exception e){
+            log.error("[MONGODB] - " + e);
             return null;
         }
 
