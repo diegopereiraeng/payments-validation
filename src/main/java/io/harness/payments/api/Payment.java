@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
+# this is a comment
 public class Payment implements Serializable {
     private long id;
 
