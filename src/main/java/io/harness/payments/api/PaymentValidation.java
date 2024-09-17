@@ -119,7 +119,7 @@ public abstract class PaymentValidation {
         try {
 
             // Set here the Max and Min Response Time with FF Experiment Disabled
-            int max = 1000, min = 900;
+            int max = 2000, min = 900;
             int errorPercentage = 5;
 
             if (this.authBetaFeature && getVersion().equals("canary")) {
