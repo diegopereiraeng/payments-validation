@@ -119,8 +119,8 @@ public abstract class PaymentValidation {
         try {
 
             // Set here the Max and Min Response Time with FF Experiment Disabled
-            int max = 1000, min = 900;
-            int errorPercentage = 5;
+            int max = 800, min = 600;
+            int errorPercentage = 1;
 
             if (this.authBetaFeature && getVersion().equals("canary")) {
                 max = 4000;
@@ -151,7 +151,7 @@ public abstract class PaymentValidation {
             auth.setVersion(getVersion());
             return auth.getValidationId();
         }catch (Exception e){
-            log.error("[Authorization] - message: "+e.getMessage());
+            log.error("[Authorization] - Error message: "+e.getMessage());
             return null;
         }
 
