@@ -154,6 +154,7 @@ public abstract class PaymentValidation {
             log.error("[Authorization] - message: "+e.getMessage());
             return null;
         }
+        
 
     }
 
@@ -166,6 +167,7 @@ public abstract class PaymentValidation {
             accepted.setErrorMsg("ERROR [Authorization] - Mongodb - Not Authorized");
         }
 
+        
         //log.info("Diego");
         accepted.setVersion(getVersion());
         return accepted;
@@ -174,7 +176,7 @@ public abstract class PaymentValidation {
     public Payment validate(Payment invoice){
 
         // Set here the Max and Min Response Time with FF Experiment Disabled
-        int max = 700, min = 500;
+        int max = 690, min = 500;
         int msDelay = r.nextInt((max - min) + 1) + min;
 
         // Set percentage Error with FF Experiment Disabled
@@ -198,9 +200,9 @@ public abstract class PaymentValidation {
                 max = 5000;
                 min = 4900;
                 errorPercentage = 95;
-
-
+                
                 msDelay = r.nextInt((max - min) + 1) + min;
+                log.error("ERROR VTAL")
 
             }
             try {
@@ -303,6 +305,7 @@ public abstract class PaymentValidation {
     public List<Payment> getPayments() {
         log.debug("beta feature is "+this.betaFeature);
         return payments;
+        
     }
 
     private String getVersion(){
